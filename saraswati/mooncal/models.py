@@ -47,22 +47,28 @@ class MoonDay(models.Model):
     article_link = models.URLField(null=True, blank=True)     
     lamas_checked = models.BooleanField(default=False)
 
-    # @property
-    # def moon_day_no(self):
-    #     return self._moon_day_no
+    @property
+    def moon_day_no_p(self):
+        return self.moon_day_no
     
-    # @moon_day_no.setter
-    # def moon_day_no(self, value):
-    #     if value:
-    #         future_days = MoonDay.objects.filter(year=self.year, day_no__gte=self.day_no)
-    #         i0 = value
-    #         for futday in future_days:
-    #             i0 = i0 + 1 if i0 < 29 else 1
-    #             futday._moon_day_no = i0
-    #             print("%d"%(futday._moon_day_no))
-    #             # futday.save()
+    @moon_day_no_p.setter
+    def moon_day_no_p(self, value):
+        if value:
+            future_days = MoonDay.objects.filter(year=self.year, day_no__gte=self.day_no)
+            i0 = value
+            for futday in future_days:
+                i0 = i0 + 1 if i0 < 29 else 1
+                futday.moon_day_no = i0
+                print("%d"%(futday.moon_day_no))
+                # futday.save()
 
-
+    @staticmethod
+    def today():
+        td = date.today()
+        fd = date(td.year, 1, 1)
+        dd = td-fd
+        day_no = dd.days
+        return MoonDay.objects.get(year=td.year, day_no=day_no)
 
     def date(self):
         fd = datetime(self.year, 1, 1)

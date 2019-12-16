@@ -13,11 +13,5 @@ def index(request):
     return HttpResponse("Hello, world. You're at the index.")
 
 def today(request):
-    td = date.today()
-    fd = date(td.year, 1, 1)
-    dd = td-fd
-    day_no = dd.days
-    md = MoonDay.objects.get(year=td.year, day_no=day_no)
-
-    ctx = { 'today': md }
+    ctx = { 'today': MoonDay.today() }
     return render(request, 'today.html', context=ctx)

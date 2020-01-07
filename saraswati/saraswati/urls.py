@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('mooncal/', include('mooncal.urls')),
+    path('', include('mooncal.urls')),
     path('admin/', admin.site.urls),
 ]
 

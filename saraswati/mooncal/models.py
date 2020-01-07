@@ -75,5 +75,8 @@ class MoonDay(models.Model):
         rd = fd + timedelta(days=self.day_no)
         return rd
     
+    def json(self):
+        return self.__dict__
+    
     def __str__(self):
-        return "%s:%s day no %s; moon day no %s; (%s, %s) " % (str(self.pk), str(self.date().strftime("%Y-%m-%d") ), str(self.day_no), str(self.moon_day_no), self.morning_hural, self.day_hural)
+        return "%s:%s Year day no %s; moon day no %s; (%s, %s) " % (str(self.pk), str(self.date().strftime("%Y-%m-%d") ), str(self.day_no), str(self.moon_day_no), self.morning_hural, self.day_hural)

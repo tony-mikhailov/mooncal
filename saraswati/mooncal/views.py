@@ -1,10 +1,10 @@
 from builtins import object
 from datetime import *
 
+from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.core import serializers
-
+from django.template.defaultfilters import first
 
 import mooncal.cal_helpers
 
@@ -37,8 +37,37 @@ def date_conv(year,month,day):
 
 def day(request, year, month, day):
     
+    date = date_conv(year,month,day)
+    qs = MoonDay.objects.filter(year=year,day_no=date.timetuple().tm_yday-1)
+    # data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    
+    ctx = { 'today': qs.first }
+    return render(request, 'today.html', context=ctx)
+
+
+def day_json(request, year, month, day):
     
     date = date_conv(year,month,day)
-    qs = MoonDay.objects.filter(year=year,day_no=date.timetuple().tm_yday)
+    qs = MoonDay.objects.filter(year=year,day_no=date.timetuple().tm_yday-1)
     data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    
     return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+def month(request, year, month, day):
+    
+    date = date_conv(year,month,day)
+    qs = MoonDay.objects.filter(year=year,day_no=date.timetuple().tm_yday-1)
+    # data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    
+    ctx = { 'today': qs.first }
+    return render(request, 'month.html', context=ctx)
+
+def month_json(request, year, month, day):
+    
+    date = date_conv(year,month,day)
+    qs = MoonDay.objects.filter(year=year,day_no=date.timetuple().tm_yday-1)
+    # data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    
+    ctx = { 'today': qs.first }
+    return render(request, 'month.html', context=ctx)
+

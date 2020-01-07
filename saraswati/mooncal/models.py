@@ -65,10 +65,44 @@ class MoonDay(models.Model):
     @staticmethod
     def today():
         td = date.today()
-        fd = date(td.year, 1, 1)
-        dd = td-fd
-        day_no = dd.days
-        return MoonDay.objects.get(year=td.year, day_no=day_no)
+        # fd = date(td.year, 1, 1)
+        # dd = td-fd
+        # day_no = dd.days
+        return MoonDay.objects.get(year=td.year, day_no=td.timetuple().tm_yday-1)
+
+    def tm_day(self):
+        td = date.fromordinal(self.date().toordinal()+1)
+        return td.timetuple().tm_mday
+
+    def tm_month(self):
+        td = date.fromordinal(self.date().toordinal()+1)
+        return td.timetuple().tm_mon
+    
+    def tm_year(self):
+        td = date.fromordinal(self.date().toordinal()+1)
+        return td.timetuple().tm_year
+
+    def ys_day(self):
+        td = date.fromordinal(self.date().toordinal()-1)
+        return td.timetuple().tm_mday
+
+    def ys_month(self):
+        td = date.fromordinal(self.date().toordinal()-1)
+        return td.timetuple().tm_mon
+    
+    def ys_year(self):
+        td = date.fromordinal(self.date().toordinal()-1)
+        return td.timetuple().tm_year
+
+
+    def tomorrow(self):
+        td = date.today()+1
+        return MoonDay.objects.get(year=td.year, day_no=td.timetuple().tm_yday-1)
+
+    def yesterday(self):
+        td = date.today()-1
+        return MoonDay.objects.get(year=td.year, day_no=td.timetuple().tm_yday-1)
+    
 
     def date(self):
         fd = datetime(self.year, 1, 1)

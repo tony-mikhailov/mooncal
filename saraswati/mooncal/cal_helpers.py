@@ -31,11 +31,6 @@ def fill_default_calendar(year, save=False):
         
         if save: 
             nmd.save()
-            
-    
         print (str(nmd))
-        
-        
-      
 
     return days

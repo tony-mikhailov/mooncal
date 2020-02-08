@@ -1,4 +1,5 @@
 from datetime import *
+import calendar
 
 from django.db import models
 from django.db.models.sql import where
@@ -65,10 +66,13 @@ class MoonDay(models.Model):
     @staticmethod
     def today():
         td = date.today()
-        # fd = date(td.year, 1, 1)
-        # dd = td-fd
-        # day_no = dd.days
         return MoonDay.objects.get(year=td.year, day_no=td.timetuple().tm_yday-1)
+    
+    @staticmethod
+    def month_days(year, month):
+        (fd, ld) = (date(year=year,month=month, day=1), date(year=year,month=month, day=calendar.monthrange(year, month)[1]))
+        (fd_no, ld_no) = (fd.timetuple().tm_yday-1, ld.timetuple().tm_yday-1)
+        return MoonDay.objects.filter(year=year,day_no__gte=fd_no,day_no__lte=ld_no)
 
     def tm_day(self):
         td = date.fromordinal(self.date().toordinal()+1)

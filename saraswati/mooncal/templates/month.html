@@ -1,0 +1,22 @@
+
+
+<h1> {{ today.month_fullname }}, {{ today.year }} </h1>
+
+<h2> H2 </h2>
+
+
+{% for d in days_and_forms %}
+<p>
+    <a href="{{ d.day.url }}" > {{ d.day.date_str }}</a>
+
+    {{ d.morning_form }}
+    {{ d.day_form }}
+    {% comment %} {{ d.day.day }}
+    {{ d.day.morning_hural }}
+    {{ d.day.day_hural }} {% endcomment %}
+
+
+</p>
+
+{% endfor %}
+

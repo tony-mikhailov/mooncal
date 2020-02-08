@@ -1,4 +1,5 @@
 from datetime import *
+import calendar
 
 from django.db import models
 from django.db.models.sql import where
@@ -18,7 +19,8 @@ class Ritual(models.Model):
     video_link = models.URLField(null=True, blank=True)     
     
     def __str__(self):
-        return "%d; %s" % (self.pk, self.short_name)
+        return "%s" % (self.short_name)
+        # return "%d; %s" % (self.pk, self.short_name)
         
 class MoonDay(models.Model):
     year = models.IntegerField()
@@ -65,10 +67,13 @@ class MoonDay(models.Model):
     @staticmethod
     def today():
         td = date.today()
-        # fd = date(td.year, 1, 1)
-        # dd = td-fd
-        # day_no = dd.days
         return MoonDay.objects.get(year=td.year, day_no=td.timetuple().tm_yday-1)
+    
+    @staticmethod
+    def month_days(year, month):
+        (fd, ld) = (date(year=year,month=month, day=1), date(year=year,month=month, day=calendar.monthrange(year, month)[1]))
+        (fd_no, ld_no) = (fd.timetuple().tm_yday-1, ld.timetuple().tm_yday-1)
+        return MoonDay.objects.filter(year=year,day_no__gte=fd_no,day_no__lte=ld_no)
 
     def tm_day(self):
         td = date.fromordinal(self.date().toordinal()+1)
@@ -94,7 +99,6 @@ class MoonDay(models.Model):
         td = date.fromordinal(self.date().toordinal()-1)
         return td.timetuple().tm_year
 
-
     def tomorrow(self):
         td = date.today()+1
         return MoonDay.objects.get(year=td.year, day_no=td.timetuple().tm_yday-1)
@@ -108,6 +112,24 @@ class MoonDay(models.Model):
         fd = datetime(self.year, 1, 1)
         rd = fd + timedelta(days=self.day_no)
         return rd
+
+    def date_str(self):
+        return self.date().strftime("%Y-%m-%d")
+
+    def month(self):
+        return self.date().strftime("%m")
+
+    def month_fullname(self):
+        return self.date().strftime("%B")
+
+
+    def day(self):
+        return self.date().strftime("%d")
+    
+    def url(self):
+        from django.urls import reverse
+        return reverse('day', args=[str(self.year), self.month(), self.day() ])
+    
     
     def json(self):
         return self.__dict__

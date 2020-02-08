@@ -119,12 +119,15 @@ class MoonDay(models.Model):
     def month(self):
         return self.date().strftime("%m")
 
+    def month_fullname(self):
+        return self.date().strftime("%B")
+
+
     def day(self):
         return self.date().strftime("%d")
     
     def url(self):
         from django.urls import reverse
-    
         return reverse('day', args=[str(self.year), self.month(), self.day() ])
     
     

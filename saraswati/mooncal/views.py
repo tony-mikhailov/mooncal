@@ -66,6 +66,7 @@ def month(request, year, month):
     
     d = {}
     for day in qs:
+        
         d = {
             'day' : day, 
             'morning_form' : RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk} ),
@@ -73,7 +74,7 @@ def month(request, year, month):
         }
         days_and_forms.append(d)
     
-    ctx = { 'days_and_forms': days_and_forms }
+    ctx = {'today': qs[0], 'days_and_forms': days_and_forms }
     return render(request, 'month.html', context=ctx)
 
 def month_json(request, year, month):

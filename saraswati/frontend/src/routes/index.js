@@ -17,13 +17,13 @@ let routes = [
     },
     {
         name: 'day',
-        url: '/:month/:day',
+        url: '/:year/:month/:day',
         component: Day,
         exact: true
     },
     {
         name: 'month',
-        url: '/:month',
+        url: '/:year/:month',
         component: Month,
         exact: true
     },

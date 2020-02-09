@@ -72,6 +72,12 @@ let conf = {
         extensions: ['.js', '.ts']
     },
     devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8000',
+                pathRewrite: { '^/api': '' }
+            }
+        },
        historyApiFallback: true,
         overlay: true,
     }

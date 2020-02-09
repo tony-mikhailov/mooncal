@@ -1,6 +1,7 @@
 let mainServerUrl = '/api/';
 
 export default function makeRequest(url, options = {}, baseUrl = mainServerUrl){
+
     return fetch(baseUrl + url, options).then((response) => {
 
         if(response.status !== 200){

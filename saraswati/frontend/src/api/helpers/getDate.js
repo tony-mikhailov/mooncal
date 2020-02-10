@@ -1,7 +1,7 @@
 export default function getDateFromURL(params){
 
-    const year = Math.max(2020, params.year);
-    const month = Math.min(12, params.month || 0);
+    const year = Math.max(2020, params.year || 0);
+    const month = Math.min(12, params.month || 1);
     const day = Math.min(31, params.day || 1);
     const monthWord = new Date(year, month - 1, day).toLocaleString('ru', {
         month: 'long'

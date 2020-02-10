@@ -32,7 +32,7 @@ export default function Day(props) {
                 <Button variant="primary" className="ml-1">{'>'}</Button>
             </Row>
             <Row className="mt-3 d-flex align-items-center">
-                moon day: {dataFields.moon_day_no}
+                Лунный день: {dataFields.moon_day_no}
             </Row>
         </Container>
     );

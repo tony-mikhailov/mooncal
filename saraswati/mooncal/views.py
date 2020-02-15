@@ -18,7 +18,12 @@ def index(request):
     return HttpResponse("Hello, world. You're at the index.")
 
 def today(request):
-    ctx = { 'today': MoonDay.today() }
+    day =  MoonDay.today()
+    
+    morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk, 'title' : 'Yarr'} )
+    day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} )
+    
+    ctx = { 'today': day, 'morning_form' : morning_form, 'day_form' : day_form }
     
     return render(request, 'today.html', context=ctx)
 
@@ -45,7 +50,6 @@ def day(request, year, month, day):
     day = MoonDay.objects.get(year=year,day_no=date.timetuple().tm_yday-1)
     
     morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk, 'title' : 'Yarr'} )
-    # morning_form.id_for_label = "sdf"
     day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} )
     
     ctx = { 'today': day, 'morning_form' : morning_form, 'day_form' : day_form }

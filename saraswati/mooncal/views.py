@@ -86,3 +86,7 @@ def month_json(request, year, month):
     data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 
+def rituals_json(request):
+    qs = Ritual.hurals()
+    data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    return HttpResponse(data, content_type='application/json; charset=utf-8')

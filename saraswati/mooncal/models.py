@@ -3,6 +3,7 @@ import calendar
 
 from django.db import models
 from django.db.models.sql import where
+from mooncal.qol import noneOrPk
 
 
 class Ritual(models.Model):
@@ -136,7 +137,39 @@ class MoonDay(models.Model):
     
     
     def json(self):
-        return self.__dict__
+        return {'id': self.pk,
+                'year' : self.year,
+                'month' : self.month(),
+                'day' : self.day(),
+                'date' : self.date_str(),
+                
+                'url' : self.url(),
+                
+                'day_no' : self.day_no, 
+                'moon_day_no' :self.moon_day_no,
+                
+                'morning_hural' : noneOrPk(self.morning_hural),
+                'day_hural' : noneOrPk(self.day_hural),
+                'night_hural' :  noneOrPk(self.night_hural),
+            
+                'refuge' : self.refuge,
+                'pujah' : self.pujah,
+                'mandala_destruction' : self.mandala_destruction,
+                'lusuud' : self.lusuud,
+                'tsetar' : self.tsetar,
+                'baldjinima' : self.baldjinima,
+                'dashinima' : self.dashinima,
+                'tersuud' : self.tersuud ,
+                'modon_hohimoy' : self.modon_hohimoy,
+                'riha' : self.riha,
+                'pagshag' : self.pagshag,
+                'good_for_haircutself.' : self.good_for_haircut,
+                'good_for_travel': self.good_for_travel,
+                'significant_day': self.significant_day,
+                'comment' : self.comment,
+                'article_link' : self.article_link,
+                'lamas_checked' : self.lamas_checked
+                } 
     
     def __str__(self):
         return "%s:%s Year day no %s; moon day no %s; (%s, %s) " % (str(self.pk), str(self.date().strftime("%Y-%m-%d") ), str(self.day_no), str(self.moon_day_no), self.morning_hural, self.day_hural)

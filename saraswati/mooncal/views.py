@@ -2,6 +2,7 @@ from builtins import object
 from datetime import *
 
 import calendar
+import json
 
 from django.core import serializers
 from django.http import HttpResponse
@@ -12,6 +13,7 @@ import mooncal.cal_helpers
 
 from .models import MoonDay, Ritual
 from .forms import RitualForm
+from .qol import *
 
 
 def index(request):
@@ -28,7 +30,9 @@ def today(request):
     return render(request, 'today.html', context=ctx)
 
 def today_json(request):
-    data = serializers.serialize("json", [MoonDay.today()], indent=2, ensure_ascii=False)
+    # data = serializers.serialize("json", [MoonDay.today()], indent=2, ensure_ascii=False)
+    data = json.dumps(MoonDay.today().json(), indent=2, ensure_ascii=False)
+    
     return HttpResponse(data, content_type='application/json; charset=utf-8')
     # ctx = { 'today': MoonDay.today() }
     # return render(request, 'today.html', context=ctx)``~

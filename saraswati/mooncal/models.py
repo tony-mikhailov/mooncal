@@ -23,9 +23,26 @@ class Ritual(models.Model):
         return "%s" % (self.short_name)
         # return "%d; %s" % (self.pk, self.short_name)
 
+    def json(self):
+        return {'id': self.pk,
+                'short_name' : self.short_name,
+                'long_name' : self.long_name,
+                'is_hural' : self.is_hural,
+                'celebration_hural' : self.celebration_hural,
+                'for_best_reincarnation' : self.for_best_reincarnation,
+                'note_allowed' : self.note_allowed,
+                'note_for_one_name' : self.note_for_one_name,
+                'note_fix_price' :self.note_fix_price,
+                'description' : self.description,
+                'description_link' : self.description_link,
+                'video_link' : self.video_link
+                }
+
     @staticmethod
     def hurals():
         return Ritual.objects.filter(is_hural=True);
+    
+    
         
 class MoonDay(models.Model):
     year = models.IntegerField()
@@ -130,6 +147,10 @@ class MoonDay(models.Model):
 
     def day(self):
         return self.date().strftime("%d")
+
+    def weekday(self):
+        return self.date().weekday()
+
     
     def url(self):
         from django.urls import reverse
@@ -141,6 +162,7 @@ class MoonDay(models.Model):
                 'year' : self.year,
                 'month' : self.month(),
                 'day' : self.day(),
+                'weekday': self.weekday() + 1,
                 'date' : self.date_str(),
                 
                 'url' : self.url(),
@@ -148,9 +170,9 @@ class MoonDay(models.Model):
                 'day_no' : self.day_no, 
                 'moon_day_no' :self.moon_day_no,
                 
-                'morning_hural' : noneOrPk(self.morning_hural),
-                'day_hural' : noneOrPk(self.day_hural),
-                'night_hural' :  noneOrPk(self.night_hural),
+                'morning_hural_id' : noneOrPk(self.morning_hural),
+                'day_hural_id' : noneOrPk(self.day_hural),
+                'night_hural_id' :  noneOrPk(self.night_hural),
             
                 'refuge' : self.refuge,
                 'pujah' : self.pujah,

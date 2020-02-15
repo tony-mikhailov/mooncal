@@ -6,7 +6,7 @@ import json
 
 from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.template.defaultfilters import first
 
 import mooncal.cal_helpers
@@ -86,11 +86,33 @@ def month(request, year, month):
     return render(request, 'month.html', context=ctx)
 
 def month_json(request, year, month):
-    qs = MoonDay.month_days(year, month)
-    data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    ds = MoonDay.month_days(year, month)
+    rarr = []
+    for d in ds:
+        rarr.append(d.json())
+    data = json.dumps(rarr, indent=2, ensure_ascii=False)
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+def hurals_json(request):
+    hs = Ritual.hurals()
+    rarr = []
+    for h in hs:
+        rarr.append(h.json())
+    
+    data = json.dumps(rarr, indent=2, ensure_ascii=False)
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 
 def rituals_json(request):
-    qs = Ritual.hurals()
-    data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    hs = Ritual.objects.all()
+    rarr = []
+    for h in hs:
+        rarr.append(h.json())
+    
+    data = json.dumps(rarr, indent=2, ensure_ascii=False)
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+
+def ritual_json(request, id):
+    r =  get_object_or_404(Ritual, pk=id)
+    data = json.dumps(r.json(), indent=2, ensure_ascii=False)
     return HttpResponse(data, content_type='application/json; charset=utf-8')

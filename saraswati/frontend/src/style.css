@@ -1,6 +1,10 @@
 body{
     font-family: 'Roboto', sans-serif;
 }
+li{
+    list-style:none; 
+}
+
 .rotate90{
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Button } from 'react-bootstrap';
 import getDateFromURL from '~/api/helpers/getDate';
-import {getDateData} from  '~/api/get.js'
+import {getDateData} from  '~/api/getData.js'
 
 
 export default function Day(props) {

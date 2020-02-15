@@ -21,6 +21,10 @@ class Ritual(models.Model):
     def __str__(self):
         return "%s" % (self.short_name)
         # return "%d; %s" % (self.pk, self.short_name)
+
+    @staticmethod
+    def hurals():
+        return Ritual.objects.filter(is_hural=True);
         
 class MoonDay(models.Model):
     year = models.IntegerField()

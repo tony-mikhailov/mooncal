@@ -45,6 +45,9 @@ class Ritual(models.Model):
     
     
         
+#todo: add day events, rename morning_hural to hural1, hural2
+#event: begin_time, end_time, title, ritual, link, videolink
+
 class MoonDay(models.Model):
     year = models.IntegerField()
     day_no = models.IntegerField()

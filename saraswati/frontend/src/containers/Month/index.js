@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Container, Button, Row } from 'react-bootstrap';
 import getDateFromURL from '~/api/helpers/getDate';
 import { getMonthData, getHurals } from '~/api/getData.js'
+import { postDateData } from '~/api/postData.js'
 import { Link } from 'react-router-dom';
 import style from './month.module.css';
 import MonthLine from './MonthLine/index';
-import regeneratorRuntime from "regenerator-runtime";
 
 export default function Month(props) {
 
@@ -20,33 +19,54 @@ export default function Month(props) {
         year: date.month < 12 ? date.year : date.year + 1 
     }
 
-    const [lines, setLines] = useState([]);
+    const [list, setlist] = useState([]);
     const [hurals, setHurals] = useState([]);
+
+    const changeDay = (day, params)=>{
+        const newlist = list.map(item=>{
+            if (item.day == day){
+                const newItem = {
+                    ...item,
+                    ...params
+                }
+                return newItem;
+            }
+            return item;
+        });
+        setlist(newlist);
+    }
+
+    const postChangedDay=(day, param)=>{
+        const postDate = {
+            ...date,
+            day
+        }
+        postDateData(postDate, param);
+    }
+
+    const changeHural = (year, day, hural, id)=>{
+        changeDay(day, { [hural]: id})
+        postChangedDay(day, { [hural]: id})
+    }
 
     useEffect(() => {
 
-        const fetchData = async () => {
-            getMonthData(date)
-                .then(result => {
-                    if (result.length > 0) {
-                        setLines(result);
-                    }
-                })
-        };
-        fetchData();
+        getMonthData(date)
+            .then(result => {
+                if (result.length > 0) {
+                    setlist(result);
+                }
+            })
     }, [props.match.params]);
 
     useEffect(() => {
 
-        const fetchData = async () => {
-            getHurals(date)
-                .then(result => {
-                    if (result.length > 0) {
-                        setHurals(result);
-                    }
-                })
-        };
-        fetchData();
+        getHurals(date)
+            .then(result => {
+                if (result.length > 0) {
+                   setHurals(result);
+                }
+            })
     }, []);
 
     return (
@@ -59,16 +79,12 @@ export default function Month(props) {
                 <Link to={`/${nextBtn.year}/${nextBtn.month}`} className='ml-1 btn btn-primary'>{'>'}</Link>
            </Row>
            <Row className='mt-3'>
-                {<MonthLine lines={lines} hurals={hurals}/> }   
+                {<MonthLine 
+                    lines={list} 
+                    hurals={hurals}
+                    changeHural={changeHural}
+                /> }   
            </Row>
         </Container>
     );
 }
-
-Month.propTypes = {
-    list: PropTypes.array
-};
-
-Month.defaultProps = {
-    list: []
-};

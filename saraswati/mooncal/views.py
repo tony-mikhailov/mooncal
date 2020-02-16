@@ -68,6 +68,8 @@ def day_json(request, year, month, day):
             yday.morning_hural = Ritual.objects.get(pk=v)
         elif k == 'day_hural_id':
             yday.day_hural = Ritual.objects.get(pk=v)
+        else:
+            yday.set(k, v)
         
         yday.save()
         return redirect(reverse('day_json', args=(year, month, day)))

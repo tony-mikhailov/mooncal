@@ -146,14 +146,14 @@ class MoonDay(models.Model):
         return self.date().strftime("%Y-%m-%d")
 
     def month(self):
-        return self.date().strftime("%m")
+        return int(self.date().strftime("%m"))
 
     def month_fullname(self):
         return self.date().strftime("%B")
 
 
     def day(self):
-        return self.date().strftime("%d")
+        return int(self.date().strftime("%d"))
 
     def weekday(self):
         return self.date().weekday()

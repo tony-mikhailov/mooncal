@@ -55,28 +55,22 @@ def day(request, year, month, day):
 
 @csrf_exempt
 def day_json(request, year, month, day):
+    yday = MoonDay.year_day(year,month,day)
     if request.method == 'POST':
         qd = request.POST
-        yday = MoonDay.year_day(year,month,day)
-        
-        
         json_data = json.loads(request.body)
         k=next(iter(json_data))
         v=json_data[k]
-        print ('process input day' + k + str(v))
         if k == 'morning_hural_id':
             yday.morning_hural = Ritual.objects.get(pk=v)
         elif k == 'day_hural_id':
             yday.day_hural = Ritual.objects.get(pk=v)
         else:
             yday.set(k, v)
-        
         yday.save()
         return redirect(reverse('day_json', args=(year, month, day)))
     
-    date = date_conv(year,month,day)
-    qs = MoonDay.objects.filter(year=year,day_no=date.timetuple().tm_yday-1)
-    data = serializers.serialize("json", qs, indent=2, ensure_ascii=False)
+    data = json.dumps(yday.json())
     
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 

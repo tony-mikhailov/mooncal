@@ -4,6 +4,7 @@ import calendar
 from django.db import models
 from django.db.models.sql import where
 from mooncal.qol import noneOrPk
+from mooncal.qol import date_conv
 
 
 class Ritual(models.Model):
@@ -96,6 +97,12 @@ class MoonDay(models.Model):
         (fd, ld) = (date(year=year,month=month, day=1), date(year=year,month=month, day=calendar.monthrange(year, month)[1]))
         (fd_no, ld_no) = (fd.timetuple().tm_yday-1, ld.timetuple().tm_yday-1)
         return MoonDay.objects.filter(year=year,day_no__gte=fd_no,day_no__lte=ld_no)
+
+    @staticmethod
+    def year_day(year, month, day):
+        date = date_conv(year,month,day)
+        day = MoonDay.objects.get(year=year,day_no=date.timetuple().tm_yday-1)
+        return day
 
     def tm_day(self):
         td = date.fromordinal(self.date().toordinal()+1)

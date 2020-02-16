@@ -2,6 +2,7 @@ from .models import MoonDay, Ritual
 from datetime import *
 
 
+
 def clear_year(year):
     return MoonDay.objects.filter(year=year).delete()
 

@@ -1,4 +1,4 @@
-.day_no, 
+.day, 
 .moon_day_no{
     display: inline-block;
     width: 70px;
@@ -9,7 +9,7 @@
 .morning_hural,
 .day_hural{
     display: inline-block;
-    width: 100px;
+    width: 150px;
     text-align: center;
     vertical-align: top;
 

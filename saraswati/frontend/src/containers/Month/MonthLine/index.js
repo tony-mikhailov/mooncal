@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './monthLine.module.css';
 import HuralSelect from '~/components/huralSelect/index';
+import { Link } from 'react-router-dom';
 
 
 export default function MonthLine(props) {
@@ -25,7 +26,7 @@ export default function MonthLine(props) {
         return (
             <li key={item.day}>
                 <span className={style.day}>
-                    {item.day}
+                    <Link to={`/${item.year}/${item.month}/${item.day}`} className=''>{item.day}</Link>
                 </span>
                 <span className={style.moon_day_no}>
                     {item.moon_day_no}

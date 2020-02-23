@@ -10,14 +10,6 @@ import MonthLine from './MonthLine/index';
 export default function Month(props) {
 
     const date = getDateFromURL(props.match.params);
-    const prevBtn = { 
-        month: date.month > 1 ? date.month - 1 : 12,
-        year: date.month > 1 ? date.year : date.year - 1 
-    }
-    const nextBtn = { 
-        month: date.month < 12 ? date.month + 1 : 1,
-        year: date.month < 12 ? date.year : date.year + 1 
-    }
 
     const [list, setlist] = useState([]);
     const [hurals, setHurals] = useState([]);
@@ -72,11 +64,11 @@ export default function Month(props) {
     return (
         <Container>
             <Row className="mt-3 ml-3 d-flex align-items-center">
-                <Link to={`/${prevBtn.year}/${prevBtn.month}`} className='mr-1 btn btn-primary'>{'<'}</Link>
+                <Link to={`/${date.monthPrev.year}/${date.monthPrev.month}`} className='mr-1 btn btn-primary'>{'<'}</Link>
                 <span className={style.month_title}>
                     {date.monthWord} {date.year} 
                 </span>
-                <Link to={`/${nextBtn.year}/${nextBtn.month}`} className='ml-1 btn btn-primary'>{'>'}</Link>
+                <Link to={`/${date.monthNext.year}/${date.monthNext.month}`} className='ml-1 btn btn-primary'>{'>'}</Link>
            </Row>
            <Row className='mt-3'>
                 {<MonthLine 

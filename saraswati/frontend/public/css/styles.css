@@ -18,6 +18,25 @@
     vertical-align: top;
 
 }
+.day_attr__55ca46c{
+    cursor: pointer;
+    font-size: 32px;
+    color: #5f0519;
+
+}
+
+.day_img__8c032bb{
+    width: 30px;
+}
+
+.day_param_off__250890e{
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray; /* IE 6-9 */
+}
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

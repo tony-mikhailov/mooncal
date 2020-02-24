@@ -43,8 +43,8 @@ class Ritual(models.Model):
     def hurals():
         return Ritual.objects.filter(is_hural=True);
     
-    
-        
+
+
 #todo: add day events, rename morning_hural to hural1, hural2
 #event: begin_time, end_time, title, ritual, link, videolink
 
@@ -53,15 +53,15 @@ class MoonDay(models.Model):
     day_no = models.IntegerField()
     moon_day_no = models.IntegerField()
     
-    morning_hural = models.ForeignKey(Ritual, related_name='morning2ritual', on_delete=models.CASCADE)
-    day_hural = models.ForeignKey(Ritual,related_name='day2ritual', on_delete=models.CASCADE)
-    night_hural = models.ForeignKey(Ritual,related_name='night2ritual', on_delete=models.CASCADE, null=True, blank=True)
+    morning_hural = models.ForeignKey(Ritual, related_name='morning2ritual', on_delete=models.CASCADE, null=True, blank=True)
+    day_hural = models.ForeignKey(Ritual,related_name='day2ritual', on_delete=models.CASCADE, null=True, blank=True)
     
-    refuge = models.BooleanField(default=False)
-    pujah = models.BooleanField(default=False)
-    mandala_destruction = models.BooleanField(default=False)
-    lusuud = models.BooleanField(default=False)
-    tsetar = models.BooleanField(default=False)
+    # refuge = models.BooleanField(default=False)
+    # pujah = models.BooleanField(default=False)
+    # mandala_destruction = models.BooleanField(default=False)
+    # lusuud = models.BooleanField(default=False)
+    # tsetar = models.BooleanField(default=False)
+    
     baldjinima = models.BooleanField(default=False)
     dashinima = models.BooleanField(default=False)
     tersuud = models.BooleanField(default=False)
@@ -184,11 +184,11 @@ class MoonDay(models.Model):
                 'day_hural_id' : noneOrPk(self.day_hural),
                 'night_hural_id' :  noneOrPk(self.night_hural),
             
-                'refuge' : self.refuge,
-                'pujah' : self.pujah,
-                'mandala_destruction' : self.mandala_destruction,
-                'lusuud' : self.lusuud,
-                'tsetar' : self.tsetar,
+                # 'refuge' : self.refuge,
+                # 'pujah' : self.pujah,
+                # 'mandala_destruction' : self.mandala_destruction,
+                # 'lusuud' : self.lusuud,
+                # 'tsetar' : self.tsetar,
                 'baldjinima' : self.baldjinima,
                 'dashinima' : self.dashinima,
                 'tersuud' : self.tersuud ,
@@ -202,6 +202,13 @@ class MoonDay(models.Model):
                 'article_link' : self.article_link,
                 'lamas_checked' : self.lamas_checked
                 } 
+        
+class Event(models.Model):
+    begin_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
+    description = models.TextField(null=True, blank=True)
+    article_link = models.URLField(null=True, blank=True)     
+    ritual = models.ForeignKey(Ritual, related_name='event2ritual', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
-        return "%s:%s Year day no %s; moon day no %s; (%s, %s) " % (str(self.pk), str(self.date().strftime("%Y-%m-%d") ), str(self.day_no), str(self.moon_day_no), self.morning_hural, self.day_hural)
+        return "%s; %s; %s; %s; %s" % (str(self.begin_time), str(self.end_time), str(self.description), str(self.article_link), str(self.ritual))

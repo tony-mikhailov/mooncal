@@ -35,13 +35,7 @@ def today(request):
 def today_json(request):
     # data = serializers.serialize("json", [MoonDay.today()], indent=2, ensure_ascii=False)
     data = json.dumps(MoonDay.today().json(), indent=2, ensure_ascii=False)
-    
     return HttpResponse(data, content_type='application/json; charset=utf-8')
-    # ctx = { 'today': MoonDay.today() }
-    # return render(request, 'today.html', context=ctx)``~
-
-
-
 
 def day(request, year, month, day):
     

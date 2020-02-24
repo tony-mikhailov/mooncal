@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'djangobower',
     'mooncal.apps.MooncalConfig',
     'import_export',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

@@ -3,11 +3,14 @@ defusedxml==0.6.0
 diff-match-patch==20181111
 Django==3.0
 django-bower==5.2.0
+django-filter==2.2.0
 django-import-export==2.0
 django-scheduler==0.9.3
+djangorestframework==3.11.0
 et-xmlfile==1.0.1
 icalendar==4.0.4
 jdcal==1.4.1
+Markdown==3.2.1
 MarkupPy==1.14
 odfpy==1.4.0
 openpyxl==3.0.2

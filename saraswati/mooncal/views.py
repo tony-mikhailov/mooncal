@@ -59,6 +59,9 @@ def day_json(request, year, month, day):
             yday.morning_hural = Ritual.objects.get(pk=v)
         elif k == 'day_hural_id':
             yday.day_hural = Ritual.objects.get(pk=v)
+        elif k == 'moon_day_no':
+            yday.moon_day_no = v
+            setattr(yday, 'moon_day_no_p', v-1)
         else:
             print ("%s:%s" % (k, v))
             setattr(yday, k, v)

@@ -65,10 +65,10 @@ class MoonDay(models.Model):
             future_days = MoonDay.objects.filter(year=self.year, day_no__gte=self.day_no)
             i0 = value
             for futday in future_days:
-                i0 = i0 + 1 if i0 < 29 else 1
+                i0 = i0 + 1 if i0 < 30 else 1
                 futday.moon_day_no = i0
-                print("%d"%(futday.moon_day_no))
-                # futday.save()
+                # print("%d"%(futday.moon_day_no))
+                futday.save()
 
     @staticmethod
     def today():

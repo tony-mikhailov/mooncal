@@ -1,39 +1,134 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Button } from 'react-bootstrap';
+import { Container, Row, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import getDateFromURL from '~/api/helpers/getDate';
-import {getDateData} from  '~/api/getData.js'
+import { getDateData, getHurals} from  '~/api/getData.js';
+import { postDateData } from '~/api/postData';
+import dayFlags from '~/store/dayFlags.js';
+import HuralSelect from '~/components/huralSelect/index';
+import style from './day.module.css';
 
 
 export default function Day(props) {
 
-    const [dataFields, setDataFields] = useState({ moon_day_no:0 });
+    let dataFields = {}, 
+        setDataFields;
+
+    for (let i = 0, count = dayFlags.length; i < count; i++){
+        dataFields[dayFlags[i].id] = null;
+    }
+
+    [dataFields, setDataFields] = useState(dataFields);
+    const [hurals, setHurals] = useState([]);
 
     const date = getDateFromURL(props.match.params);
 
+    const changeDay = (param)=>{
+        postDateData(date, param)
+    }
+
+    const changeMoonDay = (delta)=>{
+        changeDay({ moon_day_no: dataFields.moon_day_no + delta })
+    }
+
+    const changeMorningHutal = (event) => {
+        changeDay({morning_hural_id: +event.target.value})
+    }
+
+    const changeDayHutal = (event) => {
+        changeDay({ day_hural_id: +event.target.value})
+    }
+
     useEffect(() => {
-        console.log('start')
-        
         getDateData(date)
             .then(result=>{
-                if (result.length>0){
-                    setDataFields(result[0].fields);
-                    console.log(result[0].fields);
-                }
+                setDataFields(result);
             })
         
     },[]);
 
+    useEffect(() => {
+
+        getHurals(date)
+            .then(result => {
+                if (result.length > 0) {
+                    setHurals(result);
+                }
+            })
+    }, []);
+
     return (
         <Container>
             <Row className="mt-3 d-flex align-items-center">
-                <Button variant="primary" className="mr-1">{'<'}</Button>
-                {date.day} {date.monthWord} {date.year}
-                <Button variant="primary" className="ml-1">{'>'}</Button>
+                <Col>
+                    <Link
+                        to={`/${date.dayPrev.year}/${date.dayPrev.month}/${date.dayPrev.day}`}
+                        className='btn btn-primary ml-3 mr-1'
+                    >
+                        {'<'}
+                    </Link>
+                    {date.day} <Link to={`/${date.year}/${date.month}`} className='ml-1'>{date.monthWord} {date.year} </Link>
+                    <Link
+                        to={`/${date.dayNext.year}/${date.dayNext.month}/${date.dayNext.day}`}
+                        className='btn btn-primary ml-1'
+                    >
+                        {'>'}
+                    </Link>
+               </Col>
             </Row>
+
             <Row className="mt-3 d-flex align-items-center">
-                Лунный день: {dataFields.moon_day_no}
+                    Лунный день:
+                    <Button variant="primary" className="ml-1 mr-1 " onClick={() => { changeMoonDay(-1) }}> - </Button>
+                    {dataFields.moon_day_no}
+                    <Button variant="primary" className="ml-1 mr-2" onClick={() => { changeMoonDay(1) }}> + </Button>
             </Row>
+
+            <Row className="mt-3 ">
+                <Col md={6} >
+                    {
+                        dayFlags.map((flag) => {
+                            return (
+                                <span 
+                                    key={flag.id}
+                                    className={"mr-3 " + style.day_attr + ' ' + (dataFields[flag.id] ? '' : style.day_param_off)}
+                                    onClick={() => { changeDay({ [flag.id]: !dataFields[flag.id] }) }}
+                                >
+                                    {flag.flag}  {' '}
+                                </span> )
+                        })
+                    }
+                </Col>
+            </Row>
+
+            <Row className="mt-3 ">
+                <Col md={6} >
+                    <span className="">
+                        Утренний хурал
+                    </span>
+                    <span className="">
+                        <HuralSelect
+                            hurals={hurals}
+                            changeHural={changeMorningHutal}
+                            selectedId={dataFields.morning_hural_id}
+                        />
+                    </span>
+                    <br/>
+                    <span className="">
+                        Вечерний хурал
+                    </span>
+                    <span className="">
+                        <HuralSelect
+                            hurals={hurals}
+                            changeHural={changeDayHutal}
+                            selectedId={dataFields.day_hural_id}
+                        />
+                    </span>
+                    
+                </Col>
+            </Row>
+
         </Container>
     );
 }

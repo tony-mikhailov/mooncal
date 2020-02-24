@@ -26,10 +26,3 @@ export function postMonthData(date, params) {
         })
     );
 }
-
-export function postHurals(date) {
-    return (
-        makeRequest(`hurals`)
-    );
-}
-

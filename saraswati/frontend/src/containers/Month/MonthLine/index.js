@@ -50,7 +50,7 @@ export default function MonthLine(props) {
     })
 
     return (
-        <ul>
+        <ul className="pl-0">
             <li className="list_header">
                 <span className={style.day}>
                     Число

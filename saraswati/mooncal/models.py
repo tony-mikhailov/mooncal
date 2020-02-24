@@ -23,25 +23,9 @@ class Ritual(models.Model):
     
     def __str__(self):
         return "%s" % (self.short_name)
-        # return "%d; %s" % (self.pk, self.short_name)
 
     def json(self):
         return serialize_ritual(self)
-        # return JSONRenderer().render(serialize_ritual(self),accepted_media_type='application/json; indent=4')
-
-        # return {'id': self.pk,
-        #         'short_name' : self.short_name,
-        #         'long_name' : self.long_name,
-        #         'is_hural' : self.is_hural,
-        #         'celebration_hural' : self.celebration_hural,
-        #         'for_best_reincarnation' : self.for_best_reincarnation,
-        #         'note_allowed' : self.note_allowed,
-        #         'note_for_one_name' : self.note_for_one_name,
-        #         'note_fix_price' :self.note_fix_price,
-        #         'description' : self.description,
-        #         'description_link' : self.description_link,
-        #         'video_link' : self.video_link
-        #         }
 
     @staticmethod
     def hurals():
@@ -49,8 +33,6 @@ class Ritual(models.Model):
     
 
 #todo: add day events, rename morning_hural to hural1, hural2
-#event: begin_time, end_time, title, ritual, link, videolink
-
 
 class MoonDay(models.Model):
     year = models.IntegerField()
@@ -152,7 +134,6 @@ class MoonDay(models.Model):
     def month_fullname(self):
         return self.date().strftime("%B")
 
-
     def day(self):
         return int(self.date().strftime("%d"))
 
@@ -167,37 +148,8 @@ class MoonDay(models.Model):
     
     def json(self):
         return serialize_moonday(self)
-        # return {'id': self.pk,
-        #         'year' : self.year,
-        #         'month' : self.month(),
-        #         'day' : self.day(),
-        #         'weekday': self.weekday() + 1,
-        #         'date' : self.date_str(),
-                
-        #         'url' : self.url(),
-                
-        #         'day_no' : self.day_no, 
-        #         'moon_day_no' :self.moon_day_no,
-                
-        #         'morning_hural_id' : noneOrPk(self.morning_hural),
-        #         'day_hural_id' : noneOrPk(self.day_hural),
-
-        #         'baldjinima' : self.baldjinima,
-        #         'dashinima' : self.dashinima,
-        #         'tersuud' : self.tersuud ,
-        #         'modon_hohimoy' : self.modon_hohimoy,
-        #         'riha' : self.riha,
-        #         'pagshag' : self.pagshag,
-        #         'good_for_haircutself.' : self.good_for_haircut,
-        #         'good_for_travel': self.good_for_travel,
-        #         'significant_day': self.significant_day,
-        #         'comment' : self.comment,
-        #         'article_link' : self.article_link,
-        #         'lamas_checked' : self.lamas_checked
-        #         } 
         
-        
-        
+#event: begin_time, end_time, title, ritual, link, videolink
 class Event(models.Model):
     begin_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
@@ -207,3 +159,4 @@ class Event(models.Model):
     
     def __str__(self):
         return "%s; %s; %s; %s; %s" % (str(self.begin_time), str(self.end_time), str(self.description), str(self.article_link), str(self.ritual))
+    

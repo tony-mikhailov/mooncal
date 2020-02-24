@@ -39,7 +39,7 @@ def today_json(request):
 
 def day(request, year, month, day):
     
-    day = MoonDay.day(year,month,day)
+    day = MoonDay.year_day(year,month,day)
     
     morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk, 'title' : 'Yarr'} )
     day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} )
@@ -65,7 +65,7 @@ def day_json(request, year, month, day):
         yday.save()
         return redirect(reverse('day_json', args=(year, month, day)))
     
-    data = json.dumps(yday.json())
+    data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
     
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 

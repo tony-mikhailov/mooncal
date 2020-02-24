@@ -25,7 +25,7 @@ SECRET_KEY = '#*dk!em@25dog**-mh=&5^&0_&xy!z@_5a^buwrhj2cvsxrzgf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mooncal.mikhailov.center']
 
 
 # Application definition

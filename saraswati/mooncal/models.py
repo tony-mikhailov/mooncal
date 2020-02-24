@@ -182,7 +182,7 @@ class MoonDay(models.Model):
                 
                 'morning_hural_id' : noneOrPk(self.morning_hural),
                 'day_hural_id' : noneOrPk(self.day_hural),
-                'night_hural_id' :  noneOrPk(self.night_hural),
+                # 'night_hural_id' :  noneOrPk(self.night_hural),
             
                 # 'refuge' : self.refuge,
                 # 'pujah' : self.pujah,

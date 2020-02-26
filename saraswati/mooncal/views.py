@@ -72,6 +72,36 @@ def day_json(request, year, month, day):
     
     return HttpResponse(data, content_type='application/json; charset=utf-8')
 
+@csrf_exempt
+def day_events_json(request, year, month, day):
+    yday = MoonDay.year_day(year,month,day)
+    
+    # if request.method == 'POST':
+    #     qd = request.POST
+    #     json_data = json.loads(request.body)
+    #     k=next(iter(json_data))
+    #     v=json_data[k]
+    #     if k == 'morning_hural_id':
+    #         yday.morning_hural = Ritual.objects.get(pk=v)
+    #     elif k == 'day_hural_id':
+    #         yday.day_hural = Ritual.objects.get(pk=v)
+    #     elif k == 'moon_day_no':
+    #         yday.moon_day_no = v
+    #         setattr(yday, 'moon_day_no_p', v-1)
+    #     else:
+    #         print ("%s:%s" % (k, v))
+    #         setattr(yday, k, v)
+    #     yday.save()
+    #     return redirect(reverse('day_json', args=(year, month, day)))
+  
+    arr=[]
+    for e in yday.events.all():
+        arr.append(e.json())  
+    data = json.dumps(arr, indent=2, ensure_ascii=False)
+    
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+
 def month(request, year, month):
     days_and_forms = []
     qs = MoonDay.month_days(year, month)

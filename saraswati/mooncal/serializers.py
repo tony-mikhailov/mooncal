@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 
-from mooncal.models import MoonDay, Ritual
+from mooncal.models import MoonDay, Ritual, Event
 from .qol import noneOrPk
 
 
@@ -10,6 +10,12 @@ class RitualSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ritual
         fields = "__all__"
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = "__all__"
+
 
 class MoonDaySerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField('get_url_from_moonday')

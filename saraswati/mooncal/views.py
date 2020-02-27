@@ -41,8 +41,8 @@ def day(request, year, month, day):
     
     day = MoonDay.year_day(year,month,day)
     
-    morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk, 'title' : 'Yarr'} )
-    day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} )
+    morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk } ) if day.morning_hural else None
+    day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} ) if day.day_hural else None
     
     ctx = { 'today': day, 'morning_form' : morning_form, 'day_form' : day_form }
     return render(request, 'today.html', context=ctx)

@@ -26,10 +26,11 @@ class MoonDaySerializer(serializers.ModelSerializer):
 
     morning_hural_id = serializers.SerializerMethodField('get_morning_hural_from_moonday')
     day_hural_id = serializers.SerializerMethodField('get_day_hural_from_moonday')
+    events = serializers.SerializerMethodField('get_events_from_moonday')
     
     class Meta:
         model = MoonDay
-        fields = ['year','month','day','day_no','moon_day_no','morning_hural_id','day_hural_id','url','weekday','date','month','baldjinima','dashinima','tersuud','modon_hohimoy','riha','pagshag','good_for_haircut','good_for_travel','significant_day','comment','article_link','lamas_checked',]
+        fields = ['year','month','day','day_no','moon_day_no','morning_hural_id','day_hural_id','url','weekday','date','month','baldjinima','dashinima','tersuud','modon_hohimoy','riha','pagshag','good_for_haircut','good_for_travel','significant_day','comment','article_link','lamas_checked','events']
         
     def get_url_from_moonday(self, moonday):
         return moonday.url()
@@ -52,3 +53,10 @@ class MoonDaySerializer(serializers.ModelSerializer):
 
     def get_day_hural_from_moonday(self, moonday):
         return noneOrPk(moonday.day_hural)
+
+    def get_events_from_moonday(self, moonday):
+        arr=[]
+        for e in moonday.events.all():
+            arr.append(e.json())  
+        return arr
+

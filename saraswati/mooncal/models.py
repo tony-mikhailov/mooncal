@@ -10,7 +10,7 @@ from mooncal.qol import *
 
 class Ritual(models.Model):
     short_name = models.CharField(max_length=35)
-    long_name = models.CharField(max_length=108)
+    long_name = models.TextField(max_length=108)
     is_hural = models.BooleanField(default=True)
     celebration_hural = models.BooleanField(default=False)
     for_best_reincarnation = models.BooleanField(default=False)
@@ -156,11 +156,11 @@ class MoonDay(models.Model):
 class Event(models.Model):
     begin_time = models.TimeField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
-    title = models.TextField(max_length=108, null=True, blank=True)
+    title = models.CharField(max_length=108, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     article_link = models.URLField(null=True, blank=True)     
     moonday = models.ForeignKey(MoonDay, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
-    ritual = models.ForeignKey(Ritual, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
+    ritual_id = models.ForeignKey(Ritual, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
 
     def json(self):
         return serialize_event(self)

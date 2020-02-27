@@ -166,5 +166,5 @@ class Event(models.Model):
         return serialize_event(self)
     
     def __str__(self):
-        return "%s; %s; %s; %s; %s" % (str(self.begin_time), str(self.end_time), str(self.description), str(self.article_link), str(self.ritual))
+        return "%s; %s; %s; %s; %s" % (str(self.begin_time), str(self.end_time), str(self.description), str(self.article_link), str(self.ritual_id))
     

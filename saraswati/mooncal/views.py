@@ -51,7 +51,6 @@ def day(request, year, month, day):
 def day_json(request, year, month, day):
     yday = MoonDay.year_day(year,month,day)
     if request.method == 'POST':
-        qd = request.POST
         json_data = json.loads(request.body)
         k=next(iter(json_data))
         v=json_data[k]
@@ -71,6 +70,17 @@ def day_json(request, year, month, day):
     data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
     
     return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+
+@csrf_exempt
+def add_event_json(request, year, month, day):
+    yday = MoonDay.year_day(year,month,day)
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        
+        return redirect(reverse('day_json', args=(year, month, day)))
+
+
 
 @csrf_exempt
 def day_events_json(request, year, month, day):

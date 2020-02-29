@@ -17,3 +17,7 @@
     filter: grayscale(100%);
     filter: gray; /* IE 6-9 */
 }
+
+.day_param_blocked{
+    opacity: .3;
+}

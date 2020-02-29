@@ -4,6 +4,7 @@ export function postDateData(date, params) {
     return (
         makeRequest(`${date.year}/${date.month}/${date.day}`, {
             method: 'POST',
+            redirect: "follow",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

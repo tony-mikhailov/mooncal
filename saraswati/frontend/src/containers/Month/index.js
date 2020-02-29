@@ -33,12 +33,14 @@ export default function Month(props) {
             ...date,
             day
         }
-        postDateData(postDate, param);
+        return postDateData(postDate, param)
     }
 
     const changeHural = (year, day, hural, id)=>{
-        changeDay(day, { [hural]: id})
         postChangedDay(day, { [hural]: id})
+            .then(result => {
+                changeDay(day, result)
+            })
     }
 
     useEffect(() => {

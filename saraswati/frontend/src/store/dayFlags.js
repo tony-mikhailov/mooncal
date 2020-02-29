@@ -6,7 +6,7 @@ const dayFlags = [
         flag: "Б"
     },
     {
-        if: 'dashinima',
+        id: 'dashinima',
         title: 'Дашинима',
         flag: "Д"
     },
@@ -31,7 +31,7 @@ const dayFlags = [
         flag: "Пагшаг"
     },
     {
-        id:  'good_for_haircutself',
+        id:  'good_for_haircut',
         title: 'Стрижка',
         flag: <img src="/public/img/scissors.png" />
     },
@@ -45,16 +45,16 @@ const dayFlags = [
         title: 'Значимый день',
         flag: "З"
     },
-    {
-        id: 'comment',
-        title: 'Комментарий',
-        flag: "К"
-    },
-    {
-        id: 'article_link',
-        title: 'Ссылка на статью',
-        flag: "С"
-    },
+    // {
+    //     id: 'comment',
+    //     title: 'Комментарий',
+    //     flag: "К"
+    // },
+    // {
+    //     id: 'article_link',
+    //     title: 'Ссылка на статью',
+    //     flag: "С"
+    // },
     {
         id: 'lamas_checked',
         title: 'Проверено ламой',

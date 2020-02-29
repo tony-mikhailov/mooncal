@@ -19,3 +19,9 @@ export function getHurals(date){
     );
 }
 
+export function getRituals(date){
+    return ( 
+        makeRequest(`rituals`)
+    );
+}
+

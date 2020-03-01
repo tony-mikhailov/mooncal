@@ -60,8 +60,7 @@ export default function DayEvents(props) {
 
     const saveEvent = (id)=>{
         const param = {
-            event: changedEvents.find(item => item.id == id),
-            action: 'change'
+            events: changedEvents.find(item => item.id == id),
         }
         sendEnevtData(id, param);
 
@@ -69,8 +68,7 @@ export default function DayEvents(props) {
 
     const deleteEvent = (id)=>{
         const param = {
-            event: changedEvents.find(item => item.id == id),
-            action: 'delete'
+            events: changedEvents.find(item => item.id == id),
         }
         sendEnevtData(id, param);
    }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import HuralSelect  from '~/components/huralSelect';
-import { Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 
 
 export default function DayEvents(props) {
@@ -118,6 +118,56 @@ export default function DayEvents(props) {
 
     }
 
+    const getTimeSelect = (time, disabled, presEvent, field)=>{
+        let hours=[],
+            min = [],
+            timeArr = time ? time.split(':') : [0,0]
+        ;
+
+        const changeHour = (e)=>{
+            let newValue = `${e.target.value}:${timeArr[1]}:00`;
+            changeEventField(presEvent.id, field.id, newValue) 
+        }
+        const changeMin = (e)=>{
+            let newValue = `${timeArr[0]}:${e.target.value}:00`;
+            changeEventField(presEvent.id, field.id, newValue) 
+        }
+        for( let i=0; i<24; i++){
+            hours.push(i);
+        }
+        for( let i=0; i<=60; i+=5){
+            min.push(i);
+        }
+
+        return (<Row>
+        <Col>
+                <Form.Control
+                    as="select"
+                    disabled={disabled}
+                    value={+timeArr[0]}
+                    onChange={changeHour}
+                >
+                    {
+                        hours.map(item => <option key={item}>{item}</option>)
+                    }
+                </Form.Control>
+        </Col>
+        <Col>
+                <Form.Control
+                    as="select"
+                    disabled={disabled}
+                    value={+timeArr[1]}
+                    onChange={changeMin}
+                >
+                    {
+                        min.map(item => <option key={item}>{item}</option>)
+                    }
+                </Form.Control>
+        </Col>
+        </Row>
+        )
+    }
+
     const fields = [
         {
             id:'title',
@@ -127,12 +177,12 @@ export default function DayEvents(props) {
         {
             id:'begin_time',
             name:'Начало',
-            handler: ''
+            handler: getTimeSelect
         },
         {
             id:'end_time',
             name:'окончание',
-            handler: ''
+            handler: getTimeSelect
         },
         {
             id:'description',

@@ -8,6 +8,7 @@ export default function DayEvents(props) {
 
     const [changedEvents, setChangedEvents] = useState([]);
     const [blockedEvents, setBlockedEvents] = useState([]);
+    const [newEvent, setNewEvent] = useState([]);
 
     const addToEdit = (id)=>{
         const event = props.events.find(item=>item.id==id)
@@ -18,9 +19,13 @@ export default function DayEvents(props) {
     }
 
     const cancelEdit = (id)=>{
-        setChangedEvents(
-            changedEvents.filter(item => item.id != id)
-        )
+        if(id=='new'){
+            setNewEvent([]);
+        }else{
+            setChangedEvents(
+                changedEvents.filter(item => item.id != id)
+            )
+        }
     }
 
     const isEventEdit = (id)=>{
@@ -48,12 +53,23 @@ export default function DayEvents(props) {
             id
         ]);
 
-        props.changeDay(param)
+        let paramToSend = { 
+            ...param,
+            events: {...param.events}            
+         };
+        if (id == 'new'){
+            delete paramToSend.events.id;
+        }
+
+        props.changeDay(paramToSend)
         .then(()=>{
             setBlockedEvents(
                 blockedEvents.filter(item => { item.id != id } )
             );
             cancelEdit(id);
+            if (id == 'new') {
+                setNewEvent([]);
+            }
         });
 
     }
@@ -67,11 +83,40 @@ export default function DayEvents(props) {
    }
 
     const deleteEvent = (id)=>{
-        const param = {
-            events: changedEvents.find(item => item.id == id),
-        }
-        sendEnevtData(id, param);
-   }
+        setBlockedEvents([
+            ...blockedEvents,
+            id
+        ]);
+
+        props.deleteEvent(id).then(() => {
+            setBlockedEvents(
+                blockedEvents.filter(item => { item.id != id })
+            );
+            cancelEdit(id);
+        });
+    }
+
+    const makeNewEvent = ()=>{
+
+        const newEvntObj = {
+            id: "new",
+            begin_time: '',
+            end_time: '',
+            title: '',
+            description: '',
+            article_link: '',
+            moonday: '',
+            ritual_id: ''
+        };
+
+        setNewEvent([newEvntObj]);
+
+        setChangedEvents([
+            ...changedEvents,
+            newEvntObj
+        ])
+
+    }
 
     const fields = [
         {
@@ -146,14 +191,16 @@ export default function DayEvents(props) {
         )
     }
 
-
     return (
         <Col md={6}>
             <p className="h2 mt-3 mb-3">
                 Дополнительные события
             </p>
 
-            {props.events.map(event=>{ 
+            {[
+                ...props.events,
+                ...newEvent
+            ].map(event=>{ 
                 const isEdit = isEventEdit(event.id);
                 const isBlocked = isEventBlocked(event.id);
                 return (
@@ -179,25 +226,28 @@ export default function DayEvents(props) {
                         {
                             (!isEdit || isBlocked) ||
                             <>
+                                {
+                                (event.id == 'new') ||
                                 <Button
                                     type="button"
                                     variant="danger"
                                     onClick={deleteEvent.bind(this, event.id)}
+                                    className="mr-2"
                                 >
                                     Удалить
                                 </Button>
+                                }
                                <Button 
                                     type="button" 
                                     variant="secondary"
                                     onClick={cancelEdit.bind(this, event.id)}
-                                    className="ml-2"
+                                    className="mr-2"
                                 >
                                     Отменить
                                 </Button>
                                 <Button 
                                     type="button" 
                                     variant="success"
-                                    className="ml-2"
                                     onClick={saveEvent.bind(this, event.id)}
                                 >
                                     Сохранить
@@ -208,6 +258,17 @@ export default function DayEvents(props) {
                     </div>
                 </form>   
             )})}
+
+            {
+                Boolean(newEvent.length) ||
+                <p className="mt-3">
+                    <Button
+                        onClick={makeNewEvent}
+                    >
+                        Добавить
+                    </Button>
+                </p>
+            }
         </Col>
     );
 }

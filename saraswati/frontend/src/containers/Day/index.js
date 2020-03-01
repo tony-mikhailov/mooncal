@@ -3,7 +3,7 @@ import PropTypes, { func } from 'prop-types';
 import { Container, Row, Button, Col } from 'react-bootstrap';
 import getDateFromURL from '~/api/helpers/getDate';
 import { getDateData, getHurals, getRituals} from  '~/api/getData.js';
-import { postDateData } from '~/api/postData';
+import { postDateData, postDateDeleteEvent } from '~/api/postData';
 import dayFlags from '~/store/dayFlags.js';
 import DayHead from './DayHead';
 import DayMoon from './DayMoon';
@@ -49,6 +49,12 @@ export default function Day(props) {
 
     const changeMoonDay = (delta)=>{
         changeDay({ moon_day_no: dataFields.moon_day_no + delta })
+    }
+
+    const deleteEvent = (id) => {
+        return (
+            postDateDeleteEvent(date, { id })
+        )
     }
 
     useEffect(() => {
@@ -114,6 +120,7 @@ export default function Day(props) {
                     events={dataFields.events}
                     blockedFields={blockedFields}
                     changeDay={changeDay}
+                    deleteEvent={deleteEvent}
                 />
             </Row>
 

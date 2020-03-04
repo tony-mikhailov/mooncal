@@ -109,12 +109,17 @@ def day_json(request, year, month, day):
 
 
 @csrf_exempt
-def add_event_json(request, year, month, day):
+def delete_event(request, year, month, day):
     yday = MoonDay.year_day(year,month,day)
     if request.method == 'POST':
-        json_data = json.loads(request.body)
-        
+        j = json.loads(request.body)
+        e = Event.objects.get(pk=j['id'])
+        if e: e.delete()
         return redirect(reverse('day_json', args=(year, month, day)))
+
+    data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+        
 
 
 

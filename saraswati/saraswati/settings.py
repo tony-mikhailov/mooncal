@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'mooncal.apps.MooncalConfig',
     'import_export',
     'rest_framework',
+    'jambhala.apps.JambhalaConfig',
 ]
 
 MIDDLEWARE = [

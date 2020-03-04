@@ -3,8 +3,7 @@ import calendar
 
 from django.db import models
 from django.db.models.sql import where
-from rest_framework.renderers import JSONRenderer
-
+from django.utils.translation import ugettext_lazy as _
 from mooncal.qol import *
 
 
@@ -19,7 +18,19 @@ class Ritual(models.Model):
     note_fix_price = models.IntegerField(default=0)
     description = models.TextField(null=True, blank=True)
     description_link = models.URLField(null=True, blank=True)
-    video_link = models.URLField(null=True, blank=True)     
+    video_link = models.URLField(null=True, blank=True)
+    bg_color = models.CharField(
+        verbose_name=_(u'Background Color'), 
+        max_length=7,
+        help_text=_(u'HEX color, as #RRGGBB'), 
+        null=True, blank=True
+    )
+    fg_color = models.CharField(
+        verbose_name=_(u'Foreground Color'), 
+        max_length=7,
+        help_text=_(u'HEX color, as #RRGGBB'), 
+        null=True, blank=True
+    )
     
     def __str__(self):
         return "%s" % (self.short_name)
@@ -54,6 +65,19 @@ class MoonDay(models.Model):
     comment = models.TextField(null=True, blank=True)
     article_link = models.URLField(null=True, blank=True)     
     lamas_checked = models.BooleanField(default=False)
+    bg_color = models.CharField(
+        verbose_name=_(u'Background Color'), 
+        max_length=7,
+        help_text=_(u'HEX color, as #RRGGBB'),
+        null=True, blank=True
+    )
+    fg_color = models.CharField(
+        verbose_name=_(u'Foreground Color'), 
+        max_length=7,
+        help_text=_(u'HEX color, as #RRGGBB'), 
+        null=True, blank=True
+    )
+
 
     @property
     def moon_day_no_p(self):
@@ -163,6 +187,20 @@ class Event(models.Model):
     article_link = models.URLField(null=True, blank=True)     
     moonday = models.ForeignKey(MoonDay, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
     ritual_id = models.ForeignKey(Ritual, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
+
+    bg_color = models.CharField(
+        verbose_name=_(u'Background Color'), 
+        max_length=7,
+        help_text=_(u'HEX color, as #RRGGBB'), 
+        null=True, blank=True
+    )
+    fg_color = models.CharField(
+        verbose_name=_(u'Foreground Color'), 
+        max_length=7,
+        help_text=_(u'HEX color, as #RRGGBB'), 
+        null=True, blank=True
+    )
+
 
     def json(self):
         return serialize_event(self)

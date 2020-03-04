@@ -19,6 +19,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', include('mooncal.urls')),
+    path('jambhala', include('jambhala.urls')),
     path('admin/', admin.site.urls),
     # url(r'^rest/', include('rest_framework.urls'))
 ]

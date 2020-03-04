@@ -14,6 +14,7 @@ export default function HuralSelect(props) {
             className="form-control"
             value={props.selectedId} 
             onChange={changeHural}
+            disabled={props.disabled}
         >
             {
                 props.hurals.map(item=>{return(
@@ -32,11 +33,13 @@ export default function HuralSelect(props) {
 HuralSelect.propTypes = {
     hurals: PropTypes.array,
     changeHural: PropTypes.func,
-    selectedId: PropTypes.number
+    selectedId: PropTypes.number,
+    disabled: PropTypes.bool
 };
 
 HuralSelect.defaultProps = {
     hurals: [],
     changeHural: PropTypes.func,
-    selectedId: 0
+    selectedId: 0,
+    disabled:false
 };

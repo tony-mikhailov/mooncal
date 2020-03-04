@@ -5,12 +5,12 @@ from django.db import models
 from django.db.models.sql import where
 from rest_framework.renderers import JSONRenderer
 
-from mooncal.qol import date_conv, serialize_moonday, serialize_ritual
+from mooncal.qol import *
 
 
 class Ritual(models.Model):
     short_name = models.CharField(max_length=35)
-    long_name = models.CharField(max_length=108)
+    long_name = models.TextField(max_length=108)
     is_hural = models.BooleanField(default=True)
     celebration_hural = models.BooleanField(default=False)
     for_best_reincarnation = models.BooleanField(default=False)
@@ -87,6 +87,10 @@ class MoonDay(models.Model):
         day = MoonDay.objects.get(year=year,day_no=date.timetuple().tm_yday-1)
         return day
 
+
+    def __str__(self):
+        return "%s" % (self.date_str())
+
     def tm_day(self):
         td = date.fromordinal(self.date().toordinal()+1)
         return td.timetuple().tm_mday
@@ -145,18 +149,24 @@ class MoonDay(models.Model):
         from django.urls import reverse
         return reverse('day', args=[str(self.year), self.month(), self.day() ])
     
-    
     def json(self):
         return serialize_moonday(self)
         
 #event: begin_time, end_time, title, ritual, link, videolink
+
+#TODO: rename ritual_id to ritual and change serializer to serialize it to ritual_id
 class Event(models.Model):
-    begin_time = models.TimeField(null=True)
-    end_time = models.TimeField(null=True)
+    begin_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+    title = models.CharField(max_length=108, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     article_link = models.URLField(null=True, blank=True)     
-    ritual = models.ForeignKey(Ritual, related_name='event2ritual', on_delete=models.CASCADE, null=True, blank=True)
+    moonday = models.ForeignKey(MoonDay, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
+    ritual_id = models.ForeignKey(Ritual, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
+
+    def json(self):
+        return serialize_event(self)
     
     def __str__(self):
-        return "%s; %s; %s; %s; %s" % (str(self.begin_time), str(self.end_time), str(self.description), str(self.article_link), str(self.ritual))
+        return "%s; %s; %s; %s; %s" % (str(self.begin_time), str(self.end_time), str(self.description), str(self.article_link), str(self.ritual_id))
     

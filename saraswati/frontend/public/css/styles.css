@@ -18,24 +18,28 @@
     vertical-align: top;
 
 }
-.day_attr__55ca46c{
+.day_attr__75a644c{
     cursor: pointer;
     font-size: 32px;
     color: #5f0519;
 
 }
 
-.day_attr__55ca46c img{
+.day_attr__75a644c img{
     width: 30px;
 }
 
-.day_param_off__250890e{
+.day_param_off__426e400{
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
     -o-filter: grayscale(100%);
     filter: grayscale(100%);
     filter: gray; /* IE 6-9 */
+}
+
+.day_param_blocked__1bab0a6{
+    opacity: .3;
 }
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)

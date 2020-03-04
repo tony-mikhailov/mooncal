@@ -12,12 +12,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 import mooncal.cal_helpers
 
-from .models import MoonDay, Ritual
+from .models import MoonDay, Ritual, Event
 from .forms import RitualForm
 from .qol import *
 from django.urls import reverse
 from mooncal.qol import date_conv
-
+from django.utils.datetime_safe import strftime
+from datetime import datetime
 
 def index(request):
     return HttpResponse("Hello, world. You're at the index.")
@@ -41,17 +42,45 @@ def day(request, year, month, day):
     
     day = MoonDay.year_day(year,month,day)
     
-    morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk, 'title' : 'Yarr'} )
-    day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} )
+    morning_form = RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk } ) if day.morning_hural else None
+    day_form = RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} ) if day.day_hural else None
     
     ctx = { 'today': day, 'morning_form' : morning_form, 'day_form' : day_form }
     return render(request, 'today.html', context=ctx)
 
+def process_event_json(event, day):
+    print ("new event has come %s" % (event))
+    pk = None if event['ritual_id'] == '' else int(event['ritual_id'])
+    ritual = None if pk == None else Ritual.objects.get(pk=pk)
+    bt=datetime.strptime(event['begin_time'], '%H:%M:%S')
+    et=datetime.strptime(event['end_time'], '%H:%M:%S')
+    if 'id' in event:
+        nevent = get_object_or_404(Event, pk=event['id'])
+        nevent.begin_time=bt
+        nevent.end_time=et
+        nevent.title=event['title']
+        nevent.description=event['description']
+        # nevent.moonday=day
+        nevent.article_link=event['article_link']
+        nevent.ritual_id=ritual
+    else:
+        nevent = Event(
+            begin_time=bt,
+            end_time=et,
+            title=event['title'],
+            description=event['description'],
+            moonday=day,
+            article_link=event['article_link'],
+            ritual_id=ritual,
+        )
+
+    nevent.save()
+     
+    
 @csrf_exempt
 def day_json(request, year, month, day):
     yday = MoonDay.year_day(year,month,day)
     if request.method == 'POST':
-        qd = request.POST
         json_data = json.loads(request.body)
         k=next(iter(json_data))
         v=json_data[k]
@@ -62,6 +91,10 @@ def day_json(request, year, month, day):
         elif k == 'moon_day_no':
             yday.moon_day_no = v
             setattr(yday, 'moon_day_no_p', v-1)
+        elif k == 'events':
+            process_event_json(v, yday)
+            # yday.moon_day_no = v
+            # setattr(yday, 'moon_day_no_p', v-1)
         else:
             print ("%s:%s" % (k, v))
             setattr(yday, k, v)
@@ -71,6 +104,47 @@ def day_json(request, year, month, day):
     data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
     
     return HttpResponse(data, content_type='application/json; charset=utf-8')
+
+
+@csrf_exempt
+def add_event_json(request, year, month, day):
+    yday = MoonDay.year_day(year,month,day)
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        
+        return redirect(reverse('day_json', args=(year, month, day)))
+
+
+
+@csrf_exempt
+def day_events_json(request, year, month, day):
+    yday = MoonDay.year_day(year,month,day)
+    
+    # if request.method == 'POST':
+    #     qd = request.POST
+    #     json_data = json.loads(request.body)
+    #     k=next(iter(json_data))
+    #     v=json_data[k]
+    #     if k == 'morning_hural_id':
+    #         yday.morning_hural = Ritual.objects.get(pk=v)
+    #     elif k == 'day_hural_id':
+    #         yday.day_hural = Ritual.objects.get(pk=v)
+    #     elif k == 'moon_day_no':
+    #         yday.moon_day_no = v
+    #         setattr(yday, 'moon_day_no_p', v-1)
+    #     else:
+    #         print ("%s:%s" % (k, v))
+    #         setattr(yday, k, v)
+    #     yday.save()
+    #     return redirect(reverse('day_json', args=(year, month, day)))
+  
+    arr=[]
+    for e in yday.events.all():
+        arr.append(e.json())  
+    data = json.dumps(arr, indent=2, ensure_ascii=False)
+    
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+
 
 def month(request, year, month):
     days_and_forms = []

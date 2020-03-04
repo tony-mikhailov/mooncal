@@ -11,9 +11,10 @@ from mooncal.qol import *
 
 class Transaction(models.Model):
     created_at = models.DateTimeField(verbose_name=_(u'Creation date time'), auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name=_(u'Update date time'), auto_now_add=True)
-    status = models.CharField(max_length=35)
-    email = models.EmailField(max_length=254)
+    updated_at = models.DateTimeField(verbose_name=_(u'Update date time'), auto_now=True)
+    status = models.CharField(max_length=35, null=True, blank=True)
+    email = models.EmailField(max_length=254, null=True, blank=True)
+    pid = models.CharField(max_length=40)
     amount = models.IntegerField(
         default=10,
         validators=[
@@ -21,6 +22,18 @@ class Transaction(models.Model):
             MinValueValidator(10)
         ]
     )
-    currency = models.CharField(max_length=3)
+    currency = models.CharField(max_length=5)
     saved = models.BooleanField()
+    canceled = models.BooleanField()
+    cancel_wait = models.BooleanField()
+    from_vk = models.BooleanField()
+    description = models.TextField(null=True, blank=True)
+    short_bank_info = models.CharField(max_length=200)
+    next_pay = models.DateTimeField(verbose_name=_(u'Next payment date time for saved paymemts'))
+    last_pay_status = models.CharField(max_length=35)
+    last_mailed_at = models.DateTimeField(verbose_name=_(u'Last sended email date time'), auto_now_add=True)
+    note_subj = models.CharField(max_length=80, null=True, blank=True)
+    note_data = models.TextField(null=True, blank=True)
+    pay_ref = models.CharField(max_length=16)
+    
     

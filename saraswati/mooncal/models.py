@@ -153,6 +153,8 @@ class MoonDay(models.Model):
         return serialize_moonday(self)
         
 #event: begin_time, end_time, title, ritual, link, videolink
+
+#TODO: rename ritual_id to ritual and change serializer to serialize it to ritual_id
 class Event(models.Model):
     begin_time = models.TimeField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)

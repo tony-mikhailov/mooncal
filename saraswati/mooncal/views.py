@@ -52,8 +52,10 @@ def process_event_json(event, day):
     print ("new event has come %s" % (event))
     pk = None if event['ritual_id'] == '' else int(event['ritual_id'])
     ritual = None if pk == None else Ritual.objects.get(pk=pk)
-    bt=datetime.strptime(event['begin_time'], '%H:%M:%S')
-    et=datetime.strptime(event['end_time'], '%H:%M:%S')
+    bts=event['begin_time'] if event['begin_time'] else '00:00:00'
+    ets=event['end_time'] if event['end_time'] else '00:00:00'
+    bt=datetime.strptime(bts, '%H:%M:%S')
+    et=datetime.strptime(ets, '%H:%M:%S')
     if 'id' in event:
         nevent = get_object_or_404(Event, pk=event['id'])
         nevent.begin_time=bt

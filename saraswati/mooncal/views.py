@@ -12,12 +12,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 import mooncal.cal_helpers
 
-from .models import MoonDay, Ritual
+from .models import MoonDay, Ritual, Event
 from .forms import RitualForm
 from .qol import *
 from django.urls import reverse
 from mooncal.qol import date_conv
-
+from django.utils.datetime_safe import strftime
+from datetime import datetime
 
 def index(request):
     return HttpResponse("Hello, world. You're at the index.")
@@ -47,6 +48,37 @@ def day(request, year, month, day):
     ctx = { 'today': day, 'morning_form' : morning_form, 'day_form' : day_form }
     return render(request, 'today.html', context=ctx)
 
+def process_event_json(event, day):
+    print ("new event has come %s" % (event))
+    pk = None if event['ritual_id'] == '' else int(event['ritual_id'])
+    ritual = None if pk == None else Ritual.objects.get(pk=pk)
+    bts=event['begin_time'] if event['begin_time'] else '00:00:00'
+    ets=event['end_time'] if event['end_time'] else '00:00:00'
+    bt=datetime.strptime(bts, '%H:%M:%S')
+    et=datetime.strptime(ets, '%H:%M:%S')
+    if 'id' in event:
+        nevent = get_object_or_404(Event, pk=event['id'])
+        nevent.begin_time=bt
+        nevent.end_time=et
+        nevent.title=event['title']
+        nevent.description=event['description']
+        # nevent.moonday=day
+        nevent.article_link=event['article_link']
+        nevent.ritual_id=ritual
+    else:
+        nevent = Event(
+            begin_time=bt,
+            end_time=et,
+            title=event['title'],
+            description=event['description'],
+            moonday=day,
+            article_link=event['article_link'],
+            ritual_id=ritual,
+        )
+
+    nevent.save()
+     
+    
 @csrf_exempt
 def day_json(request, year, month, day):
     yday = MoonDay.year_day(year,month,day)
@@ -61,6 +93,10 @@ def day_json(request, year, month, day):
         elif k == 'moon_day_no':
             yday.moon_day_no = v
             setattr(yday, 'moon_day_no_p', v-1)
+        elif k == 'events':
+            process_event_json(v, yday)
+            # yday.moon_day_no = v
+            # setattr(yday, 'moon_day_no_p', v-1)
         else:
             print ("%s:%s" % (k, v))
             setattr(yday, k, v)
@@ -73,12 +109,17 @@ def day_json(request, year, month, day):
 
 
 @csrf_exempt
-def add_event_json(request, year, month, day):
+def delete_event(request, year, month, day):
     yday = MoonDay.year_day(year,month,day)
     if request.method == 'POST':
-        json_data = json.loads(request.body)
-        
+        j = json.loads(request.body)
+        e = Event.objects.get(pk=j['id'])
+        if e: e.delete()
         return redirect(reverse('day_json', args=(year, month, day)))
+
+    data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
+        
 
 
 

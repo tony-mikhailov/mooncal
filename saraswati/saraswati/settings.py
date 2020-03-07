@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
-    'mooncal.apps.MooncalConfig',
     'import_export',
     'rest_framework',
+    'mooncal.apps.MooncalConfig',
     'jambhala.apps.JambhalaConfig',
 ]
 

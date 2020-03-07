@@ -176,17 +176,15 @@ class MoonDay(models.Model):
     def json(self):
         return serialize_moonday(self)
         
-#event: begin_time, end_time, title, ritual, link, videolink
-
-#TODO: rename ritual_id to ritual and change serializer to serialize it to ritual_id
 class Event(models.Model):
     begin_time = models.TimeField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
     title = models.CharField(max_length=108, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     article_link = models.URLField(null=True, blank=True)     
+    video_link = models.URLField(null=True, blank=True)     
     moonday = models.ForeignKey(MoonDay, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
-    ritual_id = models.ForeignKey(Ritual, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
+    ritual = models.ForeignKey(Ritual, related_name='events', on_delete=models.CASCADE, null=True, blank=True)
 
     bg_color = models.CharField(
         verbose_name=_(u'Background Color'), 

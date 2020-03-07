@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Col } from 'react-bootstrap';
 import style from './day.module.css';
+import dayFlagsStore from '~/store/dayFlags.js';
 
 
 export default function DayFlags(props) {
 
     return (
-        <Col md={6} >
+        <>
             {
-                props.dayFlags.map((flag) => {
+                dayFlagsStore.map((flag) => {
                     const isBlocked = Boolean(props.blockedFields.indexOf(flag.id) + 1);
                     return (
                         <span
@@ -28,15 +28,17 @@ export default function DayFlags(props) {
                         </span>)
                 })
             }
-        </Col>
+        </>
 
     );
 }
 
 DayFlags.propTypes = {
-    dayFlags: PropTypes.array
+    blockedFields: PropTypes.array,
+    changeDay: PropTypes.func
 };
 
 DayFlags.defaultProps = {
-    dayFlags: []
+    blockedFields: [],
+    changeDay: ()=>{}
 };

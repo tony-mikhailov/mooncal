@@ -4,10 +4,10 @@ import { Container, Row, Button, Col } from 'react-bootstrap';
 import getDateFromURL from '~/api/helpers/getDate';
 import { getDateData, getHurals, getRituals} from  '~/api/getData.js';
 import { postDateData, postDateDeleteEvent } from '~/api/postData';
-import dayFlags from '~/store/dayFlags.js';
+import dayFlagsStore from '~/store/dayFlags.js';
 import DayHead from './DayHead';
 import DayMoon from './DayMoon';
-import DayFlags from './DayFlags';
+import DayFlags from '~/containers/DayFlags';
 import DayHurals from './DayHurals';
 import DayEvents from './DayEvents';
 
@@ -16,8 +16,8 @@ export default function Day(props) {
 
     let dataFields = {}, 
         setDataFields;
-    for (let i = 0, count = dayFlags.length; i < count; i++){
-        dataFields[dayFlags[i].id] = null;
+    for (let i = 0, count = dayFlagsStore.length; i < count; i++){
+        dataFields[dayFlagsStore[i].id] = null;
     }
     [dataFields, setDataFields] = useState(dataFields);
 
@@ -97,12 +97,13 @@ export default function Day(props) {
             </Row>
 
             <Row className="mt-3 ">
-                <DayFlags
-                    dayFlags={dayFlags}
-                    dataFields={dataFields}
-                    blockedFields={blockedFields}
-                    changeDay={changeDay}
-                />
+                <Col md={6} >
+                    <DayFlags
+                        dataFields={dataFields}
+                        blockedFields={blockedFields}
+                        changeDay={changeDay}
+                    />
+                </Col>
             </Row>
 
             <Row className="mt-3 ">

@@ -126,25 +126,7 @@ def delete_event(request, year, month, day):
 @csrf_exempt
 def day_events_json(request, year, month, day):
     yday = MoonDay.year_day(year,month,day)
-    
-    # if request.method == 'POST':
-    #     qd = request.POST
-    #     json_data = json.loads(request.body)
-    #     k=next(iter(json_data))
-    #     v=json_data[k]
-    #     if k == 'morning_hural_id':
-    #         yday.morning_hural = Ritual.objects.get(pk=v)
-    #     elif k == 'day_hural_id':
-    #         yday.day_hural = Ritual.objects.get(pk=v)
-    #     elif k == 'moon_day_no':
-    #         yday.moon_day_no = v
-    #         setattr(yday, 'moon_day_no_p', v-1)
-    #     else:
-    #         print ("%s:%s" % (k, v))
-    #         setattr(yday, k, v)
-    #     yday.save()
-    #     return redirect(reverse('day_json', args=(year, month, day)))
-  
+      
     arr=[]
     for e in yday.events.all():
         arr.append(e.json())  
@@ -157,17 +139,17 @@ def month(request, year, month):
     days_and_forms = []
     qs = MoonDay.month_days(year, month)
     
-    d = {}
-    for day in qs:
+    # d = {}
+    # for day in qs:
         
-        d = {
-            'day' : day, 
-            'morning_form' : RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk} ),
-            'day_form' : RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} ),
-        }
-        days_and_forms.append(d)
+    #     d = {
+    #         'day' : day, 
+    #         # 'morning_form' : RitualForm(auto_id=True, initial = {'ritual' : day.morning_hural.pk} ),
+    #         # 'day_form' : RitualForm(auto_id=True, initial = {'ritual' : day.day_hural.pk} ),
+    #     }
+    #     days_and_forms.append(d)
     
-    ctx = {'today': qs[0], 'days_and_forms': days_and_forms }
+    ctx = {'today': qs[0], 'days': qs }
     return render(request, 'month.html', context=ctx)
 
 @csrf_exempt

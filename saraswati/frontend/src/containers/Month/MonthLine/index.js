@@ -15,7 +15,7 @@ export default function MonthLine(props) {
         indexHurals[props.hurals[i].id] = props.hurals[i]
     };
 
-    const lines = props.lines.sort(item => item.day).map(item => {
+    const lines = props.lines.sort((a, b) => (a.day - b.day)).map(item => {
 
         const changeMorningHutal = (event) => {
             props.changeHural(item.year, item.day, "morning_hural_id", +event.target.value)

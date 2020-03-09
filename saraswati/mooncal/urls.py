@@ -11,7 +11,7 @@ urlpatterns = [
     path('api/today', views.today_json, name='today_json'),
     
     path('api/<int:year>/<int:month>/<int:day>', views.day_json, name='day_json'),
-    path('api/<int:year>/<int:month>/<int:day>/delete_event', views.delete_event, name='day_json'),
+    path('api/<int:year>/<int:month>/<int:day>/delete_event', views.delete_event, name='day_delete'),
     path('api/<int:year>/<int:month>/<int:day>/events', views.day_events_json, name='events_json'),
     # path('api/<int:year>/<int:month>/<int:day>/addevent', views.add_event_json),
     

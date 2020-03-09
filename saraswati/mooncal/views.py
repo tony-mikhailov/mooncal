@@ -115,10 +115,10 @@ def delete_event(request, year, month, day):
         j = json.loads(request.body)
         e = Event.objects.get(pk=j['id'])
         if e: e.delete()
-        return redirect(reverse('day_json', args=(year, month, day)))
 
-    data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
-    return HttpResponse(data, content_type='application/json; charset=utf-8')
+    return redirect(reverse('day_json', args=(year, month, day)))
+    # data = json.dumps(yday.json(), indent=2, ensure_ascii=False)
+    # return HttpResponse(data, content_type='application/json; charset=utf-8')
         
 
 

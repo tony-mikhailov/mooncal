@@ -24,6 +24,7 @@ export default function MonthLine(props) {
         const changeDayHutal = (event) => {
             props.changeHural(item.year, item.day, "day_hural_id", +event.target.value)
         }
+        console.log(item)
 
         return (
             <li key={item.day} className={style.day_Line + (item.weekday == 7 ? ' mb-3' : '') }>
@@ -56,8 +57,6 @@ export default function MonthLine(props) {
                     <Col md={6} className={style.line_flags}>
                         <DayFlags
                             dataFields={item}
-                        // blockedFields={blockedFields}
-                        // changeDay={changeDay}
                         />
                     </Col>
                 </Row>

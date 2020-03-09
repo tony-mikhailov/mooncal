@@ -100,8 +100,6 @@ export default function Day(props) {
                 <Col md={6} >
                     <DayFlags
                         dataFields={dataFields}
-                        blockedFields={blockedFields}
-                        changeDay={changeDay}
                     />
                 </Col>
             </Row>

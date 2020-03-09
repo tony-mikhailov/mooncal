@@ -12,14 +12,18 @@ class RitualSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class EventSerializer(serializers.ModelSerializer):
-    id = serializers.SerializerMethodField('get_ritual_id_from_event')
+    id = serializers.SerializerMethodField('get_id_from_event')
+    ritual_id = serializers.SerializerMethodField('get_ritual_id_from_event')
 
     class Meta:
         model = Event
-        fields = ['begin_time','end_time','title','description','article_link','moonday','id']
+        fields = ['begin_time','end_time','title','description','article_link','moonday','id','ritual_id']
 
     def get_ritual_id_from_event(self, event):
-        return noneOrPk(event)
+        return event.ritual_id
+
+    def get_id_from_event(self, event):
+        return event.pk
 
 
 class MoonDaySerializer(serializers.ModelSerializer):

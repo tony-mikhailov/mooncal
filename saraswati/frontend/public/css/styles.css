@@ -2,10 +2,11 @@
     width: 120px;
     text-align: center;
 }
-.day__5704c38, 
+.day__5704c38,
+.day_week__255c49c,
 .moon_day_no__f4c7dbd{
     display: inline-block;
-    width: 70px;
+    width: 50px;
     text-align: center;
     vertical-align: top;
 }
@@ -18,18 +19,30 @@
     vertical-align: top;
 
 }
-.day_attr__75a644c{
+
+.day_Line__d136d1c{
+    
+}
+
+.line_flags__2b2db07 {
+    margin-top: 8px;
+}
+
+.line_flags__2b2db07 span{
+    font-size: 16px;
+}
+.day_attr__5a015e6{
     cursor: pointer;
     font-size: 32px;
     color: #5f0519;
 
 }
 
-.day_attr__75a644c img{
+.day_attr__5a015e6 img{
     width: 30px;
 }
 
-.day_param_off__426e400{
+.day_param_off__c8013bb{
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
@@ -38,7 +51,7 @@
     filter: gray; /* IE 6-9 */
 }
 
-.day_param_blocked__1bab0a6{
+.day_param_blocked__608bfb4{
     opacity: .3;
 }
 /*!

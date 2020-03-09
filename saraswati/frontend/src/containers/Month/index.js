@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Row } from 'react-bootstrap';
+import { Container, Button, Row, Col } from 'react-bootstrap';
 import getDateFromURL from '~/api/helpers/getDate';
 import { getMonthData, getHurals } from '~/api/getData.js'
 import { postDateData } from '~/api/postData.js'
@@ -13,20 +13,6 @@ export default function Month(props) {
 
     const [list, setlist] = useState([]);
     const [hurals, setHurals] = useState([]);
-
-    const changeDay = (day, params)=>{
-        const newlist = list.map(item=>{
-            if (item.day == day){
-                const newItem = {
-                    ...item,
-                    ...params
-                }
-                return newItem;
-            }
-            return item;
-        });
-        setlist(newlist);
-    }
 
     const postChangedDay=(day, param)=>{
         const postDate = {
@@ -42,6 +28,21 @@ export default function Month(props) {
                 changeDay(day, result)
             })
     }
+
+    const changeDay = (day, params) => {
+        const newlist = list.map(item => {
+            if (item.day == day) {
+                const newItem = {
+                    ...item,
+                    ...params
+                }
+                return newItem;
+            }
+            return item;
+        });
+        setlist(newlist);
+    }
+
 
     useEffect(() => {
 
@@ -73,11 +74,13 @@ export default function Month(props) {
                 <Link to={`/${date.monthNext.year}/${date.monthNext.month}`} className='ml-1 btn btn-primary'>{'>'}</Link>
            </Row>
            <Row className='mt-3'>
-                {<MonthLine 
-                    lines={list} 
-                    hurals={hurals}
-                    changeHural={changeHural}
-                /> }   
+               <Col>
+                    {<MonthLine
+                        lines={list}
+                        hurals={hurals}
+                        changeHural={changeHural}
+                    />}   
+               </Col>
            </Row>
         </Container>
     );

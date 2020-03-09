@@ -50,8 +50,9 @@ def day(request, year, month, day):
 
 def process_event_json(event, day):
     print ("new event has come %s" % (event))
-    pk = None if event['ritual_id'] == '' else int(event['ritual_id'])
-    ritual = None if pk == None else Ritual.objects.get(pk=pk)
+    ritual_id = None if (event['ritual_id'] == '') or (not event['ritual_id']) else int(event['ritual_id'])
+    ritual = None if ritual_id == None else Ritual.objects.get(pk=ritual_id)
+    
     bts=event['begin_time'] if event['begin_time'] else '00:00:00'
     ets=event['end_time'] if event['end_time'] else '00:00:00'
     bt=datetime.strptime(bts, '%H:%M:%S')

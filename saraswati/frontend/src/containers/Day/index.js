@@ -77,7 +77,10 @@ export default function Day(props) {
         getRituals(date)
             .then(result => {
                 if (result.length > 0) {
-                    setRituals(result);
+                    setRituals([
+                        { id: 0, short_name:'Выберите ритуал'},
+                        ...result
+                    ]);
                 }
             });
     }, []);

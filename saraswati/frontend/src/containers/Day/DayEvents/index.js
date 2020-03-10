@@ -38,12 +38,20 @@ export default function DayEvents(props) {
 
     const changeEventField = (id, field, val)=>{
         const presEvent = changedEvents.find(item => item.id == id);
+        const changes = {
+            ...presEvent,
+            [field]: val
+        };
+        if (field == 'ritual_id' 
+            && (presEvent.title == ''
+                || presEvent.title == props.rituals[presEvent.ritual_id].short_name)
+        ){
+            console.log(presEvent)
+            changes.title = props.rituals[val].short_name;
+        }
         setChangedEvents([
             ...changedEvents.filter(item=>item.id!=id),
-            { 
-                ...presEvent,
-                [field]: val
-            }
+            changes
         ]);
     }
 
@@ -170,6 +178,17 @@ export default function DayEvents(props) {
 
     const fields = [
         {
+            id:'ritual_id',
+            name:'ритуал',
+            handler: (val, disabled, presEvent, field) => {return(
+                 <HuralSelect
+                    hurals={props.rituals}
+                    changeHural={(e) => { changeEventField(presEvent.id, field.id, e.target.value) }}
+                    selectedId={val}
+                    disabled={disabled}
+                />)}
+        },
+        {
             id:'title',
             name:'Название',
             handler: ''
@@ -194,17 +213,6 @@ export default function DayEvents(props) {
                     onChange={(e) => { changeEventField(presEvent.id, field.id, e.target.value) }}
                     disabled={disabled}
                 ></textarea>)}
-        },
-        {
-            id:'ritual_id',
-            name:'ритуал',
-            handler: (val, disabled, presEvent, field) => {return(
-                 <HuralSelect
-                    hurals={props.rituals}
-                    changeHural={(e) => { changeEventField(presEvent.id, field.id, e.target.value) }}
-                    selectedId={val}
-                    disabled={disabled}
-                />)}
         },
         {
             id: 'article_link',

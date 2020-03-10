@@ -49,10 +49,11 @@
     -o-filter: grayscale(100%);
     filter: grayscale(100%);
     filter: gray; /* IE 6-9 */
+    opacity: 0.5;
 }
 
 .day_param_blocked__608bfb4{
-    opacity: .3;
+    opacity: .2;
 }
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)

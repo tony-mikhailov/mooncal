@@ -65,7 +65,7 @@ def process_event_json(event, day):
         nevent.description=event['description']
         # nevent.moonday=day
         nevent.article_link=event['article_link']
-        nevent.ritual_id=ritual
+        nevent.ritual=ritual
     else:
         nevent = Event(
             begin_time=bt,
@@ -74,7 +74,7 @@ def process_event_json(event, day):
             description=event['description'],
             moonday=day,
             article_link=event['article_link'],
-            ritual_id=ritual,
+            ritual=ritual,
         )
 
     nevent.save()

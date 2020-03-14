@@ -27,7 +27,7 @@ export default function MonthLine(props) {
         console.log(item)
 
         return (
-            <li key={item.day} className={style.day_Line + (item.weekday == 7 ? ' mb-3' : '') }>
+            <li key={item.day} className={style.list_line + (item.weekday == 7 ? ' mb-3' : '') }>
                 <Row>
                     <Col md={6}>
                         <span className={style.day + ' p-2'}>
@@ -53,6 +53,9 @@ export default function MonthLine(props) {
                         <span className={style.moon_day_no + ' p-2'}>
                             {item.moon_day_no}
                         </span>
+                        <span className={style.day_more + ' d-inline-block d-sm-none'}>
+                            >>
+                        </span>
                     </Col>
                     <Col md={6} className={style.line_flags}>
                         <DayFlags
@@ -68,7 +71,7 @@ export default function MonthLine(props) {
         <ul className="pl-0">
             <Row>
                 <Col md={6}>
-                    <li className="list_header">
+                    <li className={style.list_header}>
                         <span className={style.day}>
                             Число
                         </span>

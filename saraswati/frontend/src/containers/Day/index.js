@@ -92,11 +92,13 @@ export default function Day(props) {
             </Row>
 
             <Row className="mt-3 d-flex align-items-center">
-                <DayMoon
-                    dataFields={dataFields} 
-                    isBlocked={blockedFields.indexOf('moon_day_no') + 1}
-                    changeMoonDay={changeMoonDay}
-                />
+                <Col>
+                    <DayMoon
+                        dataFields={dataFields}
+                        isBlocked={blockedFields.indexOf('moon_day_no') + 1}
+                        changeMoonDay={changeMoonDay}
+                    />
+                </Col>
             </Row>
 
             <Row className="mt-3 ">

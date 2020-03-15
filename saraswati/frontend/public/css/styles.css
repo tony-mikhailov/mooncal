@@ -7,11 +7,15 @@
     margin-right: 15px;
 }
 
+.list_header__5b3e069 .moon_day_no__f4c7dbd{
+    margin-left: 25px;
+}
+
 .day_num__b9c9a55,
 .day_week__255c49c,
 .moon_day_no__f4c7dbd{
     display: inline-block;
-    width: 50px;
+    width: 39px;
     text-align: center;
     vertical-align: top;
 }
@@ -26,6 +30,7 @@
 }
 
 .day_more__3d8d4ba.close__efb44a4{
+    margin-left: -3px;
     transform: rotate(-90deg);
 }
 
@@ -42,7 +47,7 @@
 }
 
 .line_flags__2b2db07 {
-    margin-top: 8px;
+    margin-top: 7px;
     margin-bottom: 8px;
 }
 
@@ -87,7 +92,6 @@
     cursor: pointer;
     font-size: 32px;
     color: #5f0519;
-
 }
 
 .day_attr__5a015e6 img{
@@ -106,6 +110,27 @@
 
 .day_param_blocked__608bfb4{
     opacity: .2;
+}
+
+@media  (max-width: 576px){
+    .day_attr__5a015e6{
+        font-size: 24px;
+    }
+}
+.events_title__7875e7d{
+    font-size: 32px;
+}
+.events_header__b710039{
+    font-size: 24px;
+}
+
+@media  (max-width: 576px){
+    .events_title__7875e7d{
+        font-size: 24px;
+    }
+    .events_header__b710039{
+        font-size: 20px;
+    }
 }
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import HuralSelect  from '~/components/huralSelect';
 import { Row, Col, Button, Form } from 'react-bootstrap';
-
+import style from './dayEvents.module.css';
 
 export default function DayEvents(props) {
 
@@ -250,8 +250,8 @@ export default function DayEvents(props) {
     }
 
     return (
-        <Col md={6}>
-            <p className="h2 mt-3 mb-3">
+        <>
+            <p className={style.events_title + " mt-3 mb-3"}>
                 Дополнительные события
             </p>
 
@@ -263,8 +263,8 @@ export default function DayEvents(props) {
                 const isBlocked = isEventBlocked(event.id);
                 return (
                 <form key={event.id}>
-                    <div className="bg-light rounded border mt-3 p-3 ">
-                            <p className='h3 d-flex justify-content-between '>
+                        <div className="bg-light rounded border mt-3 p-3 ">
+                            <p className={style.events_header + ' d-flex justify-content-between '}>
                             {event.title}
                             {
                                 (isEdit || isBlocked) ||
@@ -290,7 +290,7 @@ export default function DayEvents(props) {
                                     type="button"
                                     variant="danger"
                                     onClick={deleteEvent.bind(this, event.id)}
-                                    className="mr-2"
+                                    className="mr-2 mb-2"
                                 >
                                     Удалить
                                 </Button>
@@ -299,13 +299,14 @@ export default function DayEvents(props) {
                                     type="button" 
                                     variant="secondary"
                                     onClick={cancelEdit.bind(this, event.id)}
-                                    className="mr-2"
+                                    className="mr-2 mb-2"
                                 >
                                     Отменить
                                 </Button>
                                 <Button 
                                     type="button" 
                                     variant="success"
+                                    className="mb-2"
                                     onClick={saveEvent.bind(this, event.id)}
                                 >
                                     Сохранить
@@ -327,7 +328,7 @@ export default function DayEvents(props) {
                     </Button>
                 </p>
             }
-        </Col>
+        </>
     );
 }
 

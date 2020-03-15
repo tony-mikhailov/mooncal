@@ -3,11 +3,15 @@
     margin-right: 15px;
 }
 
+.list_header .moon_day_no{
+    margin-left: 25px;
+}
+
 .day_num,
 .day_week,
 .moon_day_no{
     display: inline-block;
-    width: 50px;
+    width: 39px;
     text-align: center;
     vertical-align: top;
 }
@@ -22,6 +26,7 @@
 }
 
 .day_more.close{
+    margin-left: -3px;
     transform: rotate(-90deg);
 }
 
@@ -38,7 +43,7 @@
 }
 
 .line_flags {
-    margin-top: 8px;
+    margin-top: 7px;
     margin-bottom: 8px;
 }
 

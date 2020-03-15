@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import style from './monthLine.module.css';
@@ -25,6 +25,16 @@ export default function MonthLine(props) {
         indexHurals[props.hurals[i].id] = props.hurals[i]
     };
 
+    const [isLargeSize, setLargeSize] = useState(Boolean(window.outerWidth > 991));
+    useEffect(() => {
+        function handleResize() {
+            setLargeSize(Boolean(window.outerWidth > 991));
+        }
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const lines = props.lines.sort((a, b) => (a.day - b.day)).map(item => {
 
         const changeMorningHutal = (event) => {
@@ -39,13 +49,13 @@ export default function MonthLine(props) {
             isFlagOpen ? closeDayFlag(item.day) : openDayFlag(item.day);
         }
 
-        let isFlagOpen = Boolean(openFlagLines.indexOf(item.day) + 1);
+        let isFlagOpen = isLargeSize || Boolean(openFlagLines.indexOf(item.day) + 1);
 
         return (
             <li key={item.day} className={style.list_line + (item.weekday == 7 ? ' mb-3' : '') }>
                 <Row>
-                    <Col md={6}>
-                        <span className={style.day + ' p-2'}>
+                    <Col lg={6}>
+                        <span className={style.day_num + ' p-2'}>
                             <Link to={`/${item.year}/${item.month}/${item.day}`} className=''>{item.day}</Link>
                         </span>
                         <span className={style.day_week + (item.weekday == 6 || item.weekday == 7 ? ' text-primary' : '') + ' p-2'}>
@@ -68,13 +78,13 @@ export default function MonthLine(props) {
                         <span className={style.moon_day_no + ' p-2'}>
                             {item.moon_day_no}
                         </span>
-                        <span className={style.day_more + ' ' + (isFlagOpen ? style.close : '') + ' text-primary d-inline-block d-sm-none'}
+                        <span className={style.day_more + ' ' + (isFlagOpen ? style.close : '') + ' text-primary d-inline-block d-lg-none'}
                             onClick={toggleThisDayFlags}
                         >
                             >
                         </span>
                     </Col>
-                    {isFlagOpen && <Col md={6} className={style.line_flags}>
+                    {isFlagOpen && <Col lg={6} className={style.line_flags}>
                         <DayFlags
                             dataFields={item}
                         />
@@ -87,7 +97,7 @@ export default function MonthLine(props) {
     return (
         <ul className="pl-0">
             <Row>
-                <Col md={6}>
+                <Col lg={6}>
                     <li className={style.list_header}>
                         <span className={style.day_num}>
                             {props.date.monthWord}

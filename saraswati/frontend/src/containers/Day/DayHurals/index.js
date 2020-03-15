@@ -16,7 +16,7 @@ export default function DayHurals(props) {
 
 
     return (
-        <Col md={6} >
+        < >
             <span className="">
                 Утренний хурал
                     </span>
@@ -41,7 +41,7 @@ export default function DayHurals(props) {
                />
             </span>
 
-        </Col>
+        </>
     );
 }
 

@@ -88,7 +88,9 @@ export default function Day(props) {
     return (
         <Container>
             <Row className="mt-3 d-flex align-items-center">
-                <DayHead date={date}/>
+                <Col>
+                    <DayHead date={date} />
+                </Col>
             </Row>
 
             <Row className="mt-3 d-flex align-items-center">
@@ -102,7 +104,7 @@ export default function Day(props) {
             </Row>
 
             <Row className="mt-3 ">
-                <Col md={6} >
+                <Col lg={6} >
                     <DayFlags
                         dataFields={dataFields}
                     />
@@ -110,22 +112,26 @@ export default function Day(props) {
             </Row>
 
             <Row className="mt-3 ">
-                <DayHurals
-                    hurals={hurals}
-                    dataFields={dataFields}
-                    blockedFields={blockedFields}
-                    changeDay={changeDay}
-                />
+                <Col lg={6}>
+                    <DayHurals
+                        hurals={hurals}
+                        dataFields={dataFields}
+                        blockedFields={blockedFields}
+                        changeDay={changeDay}
+                    />
+                </Col>
             </Row>
 
             <Row className="mt-3 mb-3 flex-column">
-                <DayEvents 
-                    rituals={rituals}
-                    events={dataFields.events}
-                    blockedFields={blockedFields}
-                    changeDay={changeDay}
-                    deleteEvent={deleteEvent}
-                />
+                <Col lg={6}>
+                    <DayEvents 
+                            rituals={rituals}
+                            events={dataFields.events}
+                            blockedFields={blockedFields}
+                            changeDay={changeDay}
+                            deleteEvent={deleteEvent}
+                        />
+                </Col>
             </Row>
 
         </Container>

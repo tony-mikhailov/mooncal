@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -8,7 +7,7 @@ export default function DayHead(props) {
 
 
     return (
-        <Col>
+        <>
             <Link
                 to={`/${props.date.dayPrev.year}/${props.date.dayPrev.month}/${props.date.dayPrev.day}`}
                 className='btn btn-primary ml-3 mr-1'
@@ -24,7 +23,7 @@ export default function DayHead(props) {
             >
                 {'>'}
             </Link>
-        </Col>
+        </>
 
     );
 }

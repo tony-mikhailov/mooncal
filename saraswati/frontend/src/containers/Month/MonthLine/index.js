@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import style from './monthLine.module.css';
@@ -9,6 +9,16 @@ import { Col, Row } from 'react-bootstrap';
 
 
 export default function MonthLine(props) {
+
+    const [openFlagLines, setOpenFlagLines] = useState([]);
+
+    const openDayFlag = day => setOpenFlagLines([
+            ...openFlagLines,
+            day
+        ]);
+    const closeDayFlag = day => setOpenFlagLines(
+        openFlagLines.filter(item => item != day)
+    )
 
     const indexHurals = {};
     for( let i = 0; i < props.hurals.length; i++){
@@ -24,7 +34,12 @@ export default function MonthLine(props) {
         const changeDayHutal = (event) => {
             props.changeHural(item.year, item.day, "day_hural_id", +event.target.value)
         }
-        console.log(item)
+        
+        const toggleThisDayFlags = ()=>{
+            isFlagOpen ? closeDayFlag(item.day) : openDayFlag(item.day);
+        }
+
+        let isFlagOpen = Boolean(openFlagLines.indexOf(item.day) + 1);
 
         return (
             <li key={item.day} className={style.list_line + (item.weekday == 7 ? ' mb-3' : '') }>
@@ -33,7 +48,7 @@ export default function MonthLine(props) {
                         <span className={style.day + ' p-2'}>
                             <Link to={`/${item.year}/${item.month}/${item.day}`} className=''>{item.day}</Link>
                         </span>
-                        <span className={style.day_week + ' p-2'}>
+                        <span className={style.day_week + (item.weekday == 6 || item.weekday == 7 ? ' text-primary' : '') + ' p-2'}>
                             {dayWeek[item.weekday]}
                         </span>
                         <span className={style.morning_hural}>
@@ -53,15 +68,17 @@ export default function MonthLine(props) {
                         <span className={style.moon_day_no + ' p-2'}>
                             {item.moon_day_no}
                         </span>
-                        <span className={style.day_more + ' d-inline-block d-sm-none'}>
-                            >>
+                        <span className={style.day_more + ' ' + (isFlagOpen ? style.close : '') + ' text-primary d-inline-block d-sm-none'}
+                            onClick={toggleThisDayFlags}
+                        >
+                            >
                         </span>
                     </Col>
-                    <Col md={6} className={style.line_flags}>
+                    {isFlagOpen && <Col md={6} className={style.line_flags}>
                         <DayFlags
                             dataFields={item}
                         />
-                    </Col>
+                    </Col>}
                 </Row>
             </li>
         )
@@ -72,11 +89,8 @@ export default function MonthLine(props) {
             <Row>
                 <Col md={6}>
                     <li className={style.list_header}>
-                        <span className={style.day}>
-                            Число
-                        </span>
-                        <span className={style.day_week}>
-                            День недели
+                        <span className={style.day_num}>
+                            {props.date.monthWord}
                         </span>
                         <span className={style.morning_hural}>
                             1 хурал

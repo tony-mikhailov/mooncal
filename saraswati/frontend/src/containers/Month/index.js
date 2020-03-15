@@ -76,6 +76,7 @@ export default function Month(props) {
            <Row className='mt-3'>
                <Col>
                     {<MonthLine
+                        date={date}
                         lines={list}
                         hurals={hurals}
                         changeHural={changeHural}

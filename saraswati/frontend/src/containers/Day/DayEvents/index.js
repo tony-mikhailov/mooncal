@@ -46,7 +46,6 @@ export default function DayEvents(props) {
             && (presEvent.title == ''
                 || presEvent.title == props.rituals[presEvent.ritual_id].short_name)
         ){
-            console.log(presEvent)
             changes.title = props.rituals[val].short_name;
         }
         setChangedEvents([

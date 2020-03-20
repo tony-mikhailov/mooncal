@@ -14,7 +14,10 @@ export default function DayHead(props) {
                 {'<'}
             </Link>
 
-            {props.date.day} <Link to={`/${props.date.year}/${props.date.month}`} className='ml-1'>{props.date.monthWord} {props.date.year} </Link>
+            {props.date.day} 
+            <u>
+                <Link to={`/${props.date.year}/${props.date.month}`} className='ml-1'>{props.date.monthWord} {props.date.year} </Link>
+            </u>
             
             <Link
                 to={`/${props.date.dayNext.year}/${props.date.dayNext.month}/${props.date.dayNext.day}`}

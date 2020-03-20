@@ -1,9 +1,11 @@
 export default function getDateFromURL(params){
 
+    const currentDare = new Date();
+
     const dateFull={
-        year: +params.year || 2020,
-        month: Math.min(12, params.month || 1),
-        day: Math.min(31, params.day || 1),
+        year: +params.year || currentDare.getFullYear(),
+        month: Math.min(12, params.month || (currentDare.getMonth()+1)),
+        day: Math.min(31, params.day || currentDare.getDate()),
     }
      
     dateFull.monthWord = new Date(dateFull.year, dateFull.month - 1, dateFull.day).toLocaleString('ru', {

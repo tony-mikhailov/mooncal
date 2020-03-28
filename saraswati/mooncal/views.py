@@ -88,9 +88,9 @@ def day_json(request, year, month, day):
         k=next(iter(json_data))
         v=json_data[k]
         if k == 'morning_hural_id':
-            yday.morning_hural = Ritual.objects.get(pk=v)
+            yday.morning_hural = get_or_none(Ritual, pk=v)
         elif k == 'day_hural_id':
-            yday.day_hural = Ritual.objects.get(pk=v)
+            yday.day_hural = get_or_none(Ritual, pk=v)
         elif k == 'moon_day_no':
             yday.moon_day_no = v
             setattr(yday, 'moon_day_no_p', v-1)
@@ -168,7 +168,7 @@ def month_json(request, year, month):
 
 def hurals_json(request):
     hs = Ritual.hurals()
-    rarr = []
+    rarr = [{'id': None, "short_name": "–",}]
     for h in hs:
         rarr.append(h.json())
     
@@ -177,7 +177,7 @@ def hurals_json(request):
 
 def rituals_json(request):
     hs = Ritual.objects.all()
-    rarr = []
+    rarr = [{'id': None, "short_name": "–"}]
     for h in hs:
         rarr.append(h.json())
     

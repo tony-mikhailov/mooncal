@@ -19,7 +19,7 @@ def date_conv(year,month,day):
 
 def serialize_ritual(ritual):
     from .serializers import RitualSerializer
-    return RitualSerializer(ritual,).data
+    return RitualSerializer(ritual).data
 
 def serialize_moonday(moonday):
     from .serializers import MoonDaySerializer
@@ -28,3 +28,9 @@ def serialize_moonday(moonday):
 def serialize_event(event):
     from .serializers import EventSerializer
     return EventSerializer(event).data
+
+def get_or_none(classmodel, **kwargs):
+    try:
+        return classmodel.objects.get(**kwargs)
+    except classmodel.DoesNotExist:
+        return None

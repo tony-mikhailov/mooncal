@@ -23,6 +23,7 @@ from datetime import datetime
 def index(request):
     return HttpResponse("Hello, world. You're at the index.")
 
+
 def today(request):
     day =  MoonDay.today()
     

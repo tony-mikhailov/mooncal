@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mooncal', '0003_auto_20200223_1627'),
+        ('saraswati', '0003_auto_20200223_1627'),
     ]
 
     operations = [
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('end_time', models.TimeField(null=True)),
                 ('description', models.TextField(blank=True, null=True)),
                 ('article_link', models.URLField(blank=True, null=True)),
-                ('ritual', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='event2ritual', to='mooncal.Ritual')),
+                ('ritual', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='event2ritual', to='saraswati.Ritual')),
             ],
         ),
     ]

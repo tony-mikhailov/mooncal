@@ -25,7 +25,7 @@ SECRET_KEY = '#*dk!em@25dog**-mh=&5^&0_&xy!z@_5a^buwrhj2cvsxrzgf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mooncal.mikhailov.center', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['saraswati.mikhailov.center', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'djangobower',
     'import_export',
     'rest_framework',
-    'mooncal.apps.MooncalConfig',
+    'saraswati.apps.saraswatiConfig',
     'jambhala.apps.JambhalaConfig',
 ]
 

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mooncal', '0005_event_title'),
+        ('saraswati', '0005_event_title'),
     ]
 
     operations = [

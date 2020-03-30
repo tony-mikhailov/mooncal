@@ -53,9 +53,9 @@ class Migration(migrations.Migration):
                 ('comment', models.TextField(blank=True, null=True)),
                 ('article_link', models.URLField(blank=True, null=True)),
                 ('lamas_checked', models.BooleanField(default=False)),
-                ('day_hural', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='day2ritual', to='mooncal.Ritual')),
-                ('morning_hural', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='morning2ritual', to='mooncal.Ritual')),
-                ('night_hural', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='night2ritual', to='mooncal.Ritual')),
+                ('day_hural', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='day2ritual', to='saraswati.Ritual')),
+                ('morning_hural', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='morning2ritual', to='saraswati.Ritual')),
+                ('night_hural', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='night2ritual', to='saraswati.Ritual')),
             ],
         ),
     ]

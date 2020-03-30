@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mooncal', '0002_auto_20191216_2243'),
+        ('saraswati', '0002_auto_20191216_2243'),
     ]
 
     operations = [
@@ -38,11 +38,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='moonday',
             name='day_hural',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='day2ritual', to='mooncal.Ritual'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='day2ritual', to='saraswati.Ritual'),
         ),
         migrations.AlterField(
             model_name='moonday',
             name='morning_hural',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='morning2ritual', to='mooncal.Ritual'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='morning2ritual', to='saraswati.Ritual'),
         ),
     ]

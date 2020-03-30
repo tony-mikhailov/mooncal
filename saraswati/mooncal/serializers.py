@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 
-from mooncal.models import MoonDay, Ritual, Event
+from saraswati.models import MoonDay, Ritual, Event
 from .qol import noneOrPk
 
 

@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class MooncalConfig(AppConfig):
-    name = 'mooncal'
+class saraswatiConfig(AppConfig):
+    name = 'saraswati'

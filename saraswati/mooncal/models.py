@@ -4,7 +4,7 @@ import calendar
 from django.db import models
 from django.db.models.sql import where
 from django.utils.translation import ugettext_lazy as _
-from mooncal.qol import *
+from saraswati.qol import *
 
 
 class Ritual(models.Model):

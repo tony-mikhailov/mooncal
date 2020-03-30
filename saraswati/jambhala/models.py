@@ -9,7 +9,7 @@ from django.db.models.sql import where
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.fields import BooleanField
 
-from mooncal.qol import *
+from saraswati.qol import *
 
 
 class Transaction(models.Model):
